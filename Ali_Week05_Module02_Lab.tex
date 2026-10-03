@@ -1,0 +1,629 @@
+% IA 642 Defensive Security
+% Week 05 Module 02 Lab 5.2: Live Triage on MERIDIAN-APP01
+% Group: Unais Ali (E02805019) and Hafiz Usama (E02574092)
+% Submit as: Ali_Week05_Module02_Lab.pdf
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[margin=0.85in]{geometry}
+\sloppy
+\emergencystretch=3em
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{ragged2e}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{needspace}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{xurl}
+
+\hypersetup{pdfauthor={Unais Ali; Hafiz Usama}, pdftitle={IA 642 Week 05 Lab 5.2 Live Triage MERIDIAN-APP01}}
+
+\graphicspath{{captures/}{evidence/}{./}}
+
+\definecolor{tblhead}{HTML}{1F4E79}
+\definecolor{tblrow}{HTML}{F0F4F8}
+\definecolor{codebg}{HTML}{F7FAFC}
+\definecolor{okbox}{HTML}{E6F4EA}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.22}
+\raggedbottom
+\setlist[itemize]{leftmargin=1.2em,itemsep=0.22em,topsep=0.3em,parsep=0pt}
+\setlist[enumerate]{leftmargin=1.3em,itemsep=0.28em,topsep=0.3em,parsep=0pt}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+
+\titleformat{name=\section,numberless}{\large\bfseries\color{tblhead}\filright}{}{0em}{}
+\titlespacing*{name=\section,numberless}{0pt}{0.85em}{0.3em}
+\titleformat{name=\subsection,numberless}{\normalsize\bfseries\color{tblhead}\filright}{}{0em}{}
+\titlespacing*{name=\subsection,numberless}{0pt}{0.55em}{0.2em}
+
+\newcommand{\labpart}[1]{%
+  \par\vspace{0.35em}%
+  \Needspace{8\baselineskip}%
+  \section*{#1}%
+  \nopagebreak
+}
+\newcommand{\labstep}[1]{%
+  \Needspace{6\baselineskip}%
+  \subsection*{#1}%
+  \nopagebreak
+}
+
+\lstset{
+  basicstyle=\ttfamily\scriptsize,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  rulecolor=\color{tblhead},
+  breaklines=true,
+  breakatwhitespace=false,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  aboveskip=0.35em,
+  belowskip=0.35em,
+  xleftmargin=0.15em,
+  framexleftmargin=0.2em
+}
+
+\newcommand{\evidencebox}[2]{%
+  \par\vspace{0.25em}%
+  \noindent\colorbox{okbox}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+    \textbf{Evidence \#{#1}.} #2}}%
+  \par\vspace{0.25em}%
+}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries IA 642 Defensive Security}\\[0.25em]
+{\Large Week 05 Module 02 Lab 5.2}\\[0.2em]
+{\large Live Triage on MERIDIAN-APP01: Memory, Disk, and a Recovered Sample}\\[0.35em]
+{\small Digital Forensics, Incident Response \& Malware Analysis}\\[0.25em]
+{\small Repository:
+\href{https://github.com/unaisshazan/ia642-week05-lab52-dfir}{github.com/unaisshazan/ia642-week05-lab52-dfir}}\\[0.25em]
+\end{center}
+
+\begin{tabularx}{\textwidth}{@{}l X l l@{}}
+\toprule
+\textbf{Group members} & Unais Ali & \textbf{EID} & E02805019 \\
+ & Hafiz Usama &  & E02574092 \\
+\textbf{Course} & IA 642 Defensive Security & \textbf{Week} & 05, Lab 5.2 \\
+\textbf{Tools} & WinPmem, Volatility 3, PECmd, AmcacheParser & \textbf{Date} & October 2026 \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.55em}
+
+\section*{Lab overview}
+
+This lab builds \texttt{MERIDIAN-APP01} (Windows Server 2022) on \texttt{meridian-lab-net}, stages a LOLBin-typical \texttt{certutil} execution trail and an HKCU Run-key persistence entry, acquires live memory with WinPmem, triages the image with Volatility~3, parses Prefetch and Amcache, and performs a static survey of the inert \texttt{svcupdate.bin} stand-in. Evidence \#1--\#7, three critical-thinking answers, a taxonomy classification, and a graded hunt hypothesis follow.
+
+\begin{tabularx}{\textwidth}{@{}l Y@{}}
+\toprule
+\textbf{Host} & \textbf{Role / address} \\
+\midrule
+MERIDIAN-APP01 & Windows Server 2022 application server, \texttt{10.77.0.30/24} \\
+MERIDIAN-RED01 & Analysis workstation (Volatility 3 / static triage), \texttt{10.77.0.20/24} \\
+\bottomrule
+\end{tabularx}
+
+\labpart{1. Environment setup and staged artifacts}
+
+MERIDIAN-APP01 was installed from the Windows Server 2022 Evaluation ISO (Desktop Experience), attached only to \texttt{meridian-lab-net} for lab traffic, with a NAT adapter used solely to stage tools from the host. Directories \path{C:\Meridian} and \path{C:\Meridian\evidence} were created. Staging wall-clock time was recorded before artifact generation.
+
+\labstep{Section 1.2 staging}
+
+\begin{lstlisting}
+certutil -store My > C:\Meridian\cert_store_export.txt
+certutil -hashfile C:\Windows\System32\calc.exe SHA256
+certutil -hashfile C:\Windows\System32\calc.exe SHA256
+Start-Sleep -Seconds 5
+certutil -hashfile C:\Windows\System32\notepad.exe SHA256
+
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v MeridianSyncHelper /t REG_SZ /d "powershell.exe -NoProfile -WindowStyle Hidden -Command \"Get-Date | Out-File C:\Meridian\synclog.txt -Append\"" /f
+\end{lstlisting}
+
+\textbf{Staging wall-clock timestamp:} \texttt{2026-10-02 20:32:15 -04:00}
+(captured in \path{C:\Meridian\staging_wallclock.txt}).
+Repeated certutil staging also logged at \texttt{2026-10-02 20:18:11 -04:00}
+in \path{pf_stage2.log}.
+
+\labpart{2. Part A: Memory acquisition and triage}
+
+\labstep{Evidence \#1 -- WinPmem acquisition and hash}
+
+\evidencebox{1}{WinPmem command, completion output, and SHA-256 of \texttt{meridian-app01.aff4}.}
+
+\begin{lstlisting}
+cd C:\Meridian
+.\winpmem.exe -o meridian-app01.aff4 -dd
+certutil -hashfile C:\Meridian\meridian-app01.aff4 SHA256
+\end{lstlisting}
+
+% AUTO:EV1
+\begin{lstlisting}
+CMD (AFF4, lab-style): .\winpmem.exe -o meridian-app01.aff4 -dd
+Output: C:\Meridian\meridian-app01.aff4
+Size: 4418358501 bytes (snappy AFF4)
+SHA256 (meridian-app01.aff4):
+684ae16175c58a10084617d956b7cf5a70c802665422e497a165e349dcea6555
+
+Also acquired raw image for Volatility 3 (go-winpmem):
+CMD: .\winpmem.exe acquire --progress --verbose --nosparse meridian-app01.raw
+Output: C:\Meridian\meridian-app01.raw
+Size: 6979321856 bytes
+SHA256 (meridian-app01.raw):
+2dff14a8b7fe8f0e8426cb000690e5f06a898829fb8ccabbcc0ca03865ab494c
+Volatility 3 plugins below were run against the raw image.
+\end{lstlisting}
+
+\labstep{Evidence \#2 -- windows.pslist and windows.pstree}
+
+\evidencebox{2}{Full Volatility 3 \texttt{windows.pslist} and \texttt{windows.pstree} output.}
+
+\begin{lstlisting}
+vol -f meridian-app01.aff4 windows.pslist
+vol -f meridian-app01.aff4 windows.pstree
+\end{lstlisting}
+
+% AUTO:EV2
+\begin{lstlisting}
+===== ev2_pslist.txt =====
+﻿Volatility 3 Framework 2.28.2
+PID	PPID	ImageFileName	Offset(V)	Threads	Handles	SessionId	Wow64	CreateTime	ExitTime
+4	0	System	0xcc87be881080	99	-	N/A	False	2026-10-02 22:48:42.000000 UTC	N/A
+100	4	Registry	0xcc87be9ca040	4	-	N/A	False	2026-10-02 22:48:33.000000 UTC	N/A
+332	4	smss.exe	0xcc87c0398040	2	-	N/A	False	2026-10-02 22:48:42.000000 UTC	N/A
+428	420	csrss.exe	0xcc87c20b5080	9	-	0	False	2026-10-02 22:48:44.000000 UTC	N/A
+496	488	csrss.exe	0xcc87c21f3080	10	-	1	False	2026-10-02 22:48:45.000000 UTC	N/A
+504	420	wininit.exe	0xcc87c21f1140	1	-	0	False	2026-10-02 22:48:45.000000 UTC	N/A
+560	488	winlogon.exe	0xcc87c2e36080	5	-	1	False	2026-10-02 22:48:45.000000 UTC	N/A
+624	504	services.exe	0xcc87c2e4d080	6	-	0	False	2026-10-02 22:48:45.000000 UTC	N/A
+636	504	lsass.exe	0xcc87c2e790c0	9	-	0	False	2026-10-02 22:48:45.000000 UTC	N/A
+744	624	svchost.exe	0xcc87c2f3a240	9	-	0	False	2026-10-02 22:48:46.000000 UTC	N/A
+776	504	fontdrvhost.ex	0xcc87c2ee4140	5	-	0	False	2026-10-02 22:48:46.000000 UTC	N/A
+784	560	fontdrvhost.ex	0xcc87c2f42140	5	-	1	False	2026-10-02 22:48:46.000000 UTC	N/A
+868	624	svchost.exe	0xcc87c2f512c0	9	-	0	False	2026-10-02 22:48:46.000000 UTC	N/A
+924	624	svchost.exe	0xcc87c2f83240	4	-	0	False	2026-10-02 22:48:46.000000 UTC	N/A
+992	560	dwm.exe	0xcc87c2feb080	17	-	1	False	2026-10-02 22:48:47.000000 UTC	N/A
+424	624	svchost.exe	0xcc87c302d300	3	-	0	False	2026-10-02 22:48:47.000000 UTC	N/A
+376	624	svchost.exe	0xcc87c3030300	3	-	0	False	2026-10-02 22:48:47.000000 UTC	N/A
+392	624	svchost.exe	0xcc87c3032080	2	-	0	False	2026-10-02 22:48:47.000000 UTC	N/A
+1060	624	svchost.exe	0xcc87c30652c0	2	-	0	False	2026-10-02 22:48:47.000000 UTC	N/A
+1076	624	svchost.exe	0xcc87c3070300	7	-	0	False	2026-10-02 22:48:47.000000 UTC	N/A
+1212	624	svchost.exe	0xcc87c3061080	3	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1264	624	VBoxService.ex	0xcc87c317b080	14	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1300	624	svchost.exe	0xcc87c317a080	3	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1336	624	svchost.exe	0xcc87c3179080	6	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1356	624	svchost.exe	0xcc87c3178080	1	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1372	624	svchost.exe	0xcc87c3177080	3	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1380	624	svchost.exe	0xcc87c3176080	4	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1388	624	svchost.exe	0xcc87c3175080	4	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1408	624	svchost.exe	0xcc87c3174080	2	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1508	624	svchost.exe	0xcc87c3173080	7	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1656	624	svchost.exe	0xcc87c3172080	2	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1708	624	svchost.exe	0xcc87c3171080	5	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1764	624	svchost.exe	0xcc87c3170080	9	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1776	624	svchost.exe	0xcc87c316f080	4	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1808	624	svchost.exe	0xcc87be92c080	3	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1852	624	svchost.exe	0xcc87be938080	11	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1928	624	svchost.exe	0xcc87be93b080	5	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1940	624	svchost.exe	0xcc87be939080	4	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1960	624	svchost.exe	0xcc87be93a080	3	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1156	624	svchost.exe	0xcc87be933080	4	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+2224	624	spoolsv.exe	0xcc87be93d080	7	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2264	624	svchost.exe	0xcc87be940080	8	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2280	624	svchost.exe	0xcc87be93c080	10	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2300	624	svchost.exe	0xcc87be93e080	5	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2388	624	svchost.exe	0xcc87be941080	2	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2400	624	svchost.exe	0xcc87be942080	2	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2412	624	svchost.exe	0xcc87be943080	3	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2432	624	svchost.exe	0xcc87be944080	5	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2444	624	svchost.exe	0xcc87be932080	4	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2488	624	MsMpEng.exe	0xcc87be9460c0	25	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2524	624	svchost.exe	0xcc87be948080	11	-	0	False	2026-10-02 22:48:51.000000 UTC	N/A
+2572	624	wlms.exe	0xcc87be949080	2	-	0	False	2026-10-02 22:48:51.000000 UTC	N/A
+2584	624	svchost.exe	0xcc87be94a080	10	-	0	False	2026-10-02 22:48:51.000000 UTC	N/A
+2688	624	svchost.exe	0xcc87be94b080	2	-	0	False	2026-10-02 22:48:51.000000 UTC	N/A
+2668	2280	AggregatorHost	0xcc87be94e080	2	-	0	False	2026-10-02 22:48:52.000000 UTC	N/A
+3176	1508	MicrosoftEdgeU	0xcc87be94d080	4	-	0	True	2026-10-02 22:48:54.000000 UTC	N/A
+3200	1156	sihost.exe	0xcc87c316e240	9	-	1	False	2026-10-02 22:48:54.000000 UTC	N/A
+3208	624	svchost.exe	0xcc87c316c0c0	3	-	1	False	2026-10-02 22:48:54.000000 UTC	N/A
+3272	624	svchost.exe	0xcc87c3955300	3	-	1	False	2026-10-02 22:48:54.000000 UTC	N/A
+3352	1508	taskhostw.exe	0xcc87c399d0c0	2	-	1	False	2026-10-02 22:48:54.000000 UTC	N/A
+3488	624	svchost.exe	0xcc87c39d1240	2	-	0	False	2026-10-02 22:48:54.000000 UTC	N/A
+3540	624	svchost.exe	0xcc87c39d4300	3	-	0	False	2026-10-02 22:48:55.000000 UTC	N/A
+3580	3540	ctfmon.exe	0xcc87c39ea280	8	-	1	False	2026-10-02 22:48:55.000000 UTC	N/A
+3752	624	svchost.exe	0xcc87c3adc240	2	-	0	False	2026-10-02 22:48:55.000000 UTC	N/A
+3808	560	userinit.exe	0xcc87c3adf340	0	-	1	False	2026-10-02 22:48:56.000000 UTC	2026-10-02 22:49:20.000000 UTC
+3816	624	svchost.exe	0xcc87c3ae0080	3	-	0	False	2026-10-02 22:48:56.000000 UTC	N/A
+3860	3808	explorer.exe	0xcc87c3ae5340	29	-	1	False	2026-10-02 22:48:56.000000 UTC	N/A
+2888	624	NisSrv.exe	0xcc87c3b4e080	5	-	0	False	2026-10-02 22:48:57.000000 UTC	N/A
+3464	744	StartMenuExper	0xcc87be936080	7	-	1	False	2026-10-02 22:48:59.000000 UTC	N/A
+3996	744	TextInputHost.	0xcc87c316a080	10	-	1	False	2026-10-02 22:48:59.000000 UTC	N/A
+4128	744	RuntimeBroker.	0xcc87c399b080	1	-	1	False	2026-10-02 22:49:00.000000 UTC	N/A
+4268	744	SearchApp.exe	0xcc87c3d53080	16	-	1	False	2026-10-02 22:49:00.000000 UTC	N/A
+4392	744	RuntimeBroker.	0xcc87c3d95300	1	-	1	False	2026-10-02 22:49:01.000000 UTC	N/A
+4500	3340	ServerManager.	0xcc87c3e69380	10	-	1	False	2026-10-02 22:49:02.000000 UTC	N/A
+5068	3860	VBoxTray.exe	0xcc87c4058340	12	-	1	False	2026-10-02 22:49:13.000000 UTC	N/A
+3812	624	svchost.exe	0xcc87c3ce6080	22	-	0	False	2026-10-02 22:50:52.000000 UTC	N/A
+4312	624	msdtc.exe	0xcc87be94c080	9	-	0	False	2026-10-02 22:50:52.000000 UTC	N/A
+5036	624	svchost.exe	0xcc87c3d7f080	2	-	0	False	2026-10-02 22:50:53.000000 UTC	N/A
+3956	624	svchost.exe	0xcc87c4196080	9	-	0	False	2026-10-02 22:50:53.000000 UTC	N/A
+2024	624	svchost.exe	0xcc87c41ad300	4	-	1	False	2026-10-02 22:50:54.000000 UTC	N/A
+2516	624	svchost.exe	0xcc87c419c2c0	7	-	0	False	2026-10-02 22:50:55.000000 UTC	N/A
+1832	744	wsmprovhost.ex	0xcc87be8f4080	14	-	0	False	2026-10-02 22:56:41.000000 UTC	N/A
+3468	1832	net.exe	0xcc87be911080	0	-	0	False	2026-10-02 22:56:44.000000 UTC	2026-10-02 22:56:44.000000 UTC
+4244	744	wsmprovhost.ex	0xcc87c2f39080	21	-	0	False	2026-10-02 23:07:29.000000 UTC	N/A
+2164	4244	winpmem.exe	0xcc87be8da080	8	-	0	False	2026-10-02 23:07:31.000000 UTC	N/A
+2852	2164	conhost.exe	0xcc87be93f080	6	-	0	False	2026-10-02 23:07:31.000000 UTC	N/A
+
+===== ev2_pstree.txt =====
+﻿Volatility 3 Framework 2.28.2
+PID	PPID	ImageFileName	Offset(V)	Threads	Handles	SessionId	Wow64	CreateTime	ExitTime	Audit	Cmd	Path
+4	0	System	0xcc87be881080	99	-	N/A	False	2026-10-02 22:48:42.000000 UTC	N/A	-	-	-
+* 100	4	Registry	0xcc87be9ca040	4	-	N/A	False	2026-10-02 22:48:33.000000 UTC	N/A	Registry	-	-
+* 332	4	smss.exe	0xcc87c0398040	2	-	N/A	False	2026-10-02 22:48:42.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\smss.exe	\SystemRoot\System32\smss.exe	\SystemRoot\System32\smss.exe
+428	420	csrss.exe	0xcc87c20b5080	9	-	0	False	2026-10-02 22:48:44.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\csrss.exe	%SystemRoot%\system32\csrss.exe ObjectDirectory=\Windows SharedSection=1024,20480,768 Windows=On SubSystemType=Windows ServerDll=basesrv,1 ServerDll=winsrv:UserServerDllInitialization,3 ServerDll=sxssrv,4 ProfileControl=Off MaxRequestThreads=16	C:\Windows\system32\csrss.exe
+496	488	csrss.exe	0xcc87c21f3080	10	-	1	False	2026-10-02 22:48:45.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\csrss.exe	%SystemRoot%\system32\csrss.exe ObjectDirectory=\Windows SharedSection=1024,20480,768 Windows=On SubSystemType=Windows ServerDll=basesrv,1 ServerDll=winsrv:UserServerDllInitialization,3 ServerDll=sxssrv,4 ProfileControl=Off MaxRequestThreads=16	C:\Windows\system32\csrss.exe
+504	420	wininit.exe	0xcc87c21f1140	1	-	0	False	2026-10-02 22:48:45.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\wininit.exe	wininit.exe	C:\Windows\system32\wininit.exe
+* 624	504	services.exe	0xcc87c2e4d080	6	-	0	False	2026-10-02 22:48:45.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\services.exe	C:\Windows\system32\services.exe	C:\Windows\system32\services.exe
+** 1408	624	svchost.exe	0xcc87c3174080	2	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k netsvcs -p -s Themes	C:\Windows\System32\svchost.exe
+** 2432	624	svchost.exe	0xcc87be944080	5	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k smbsvcs -s LanmanServer	C:\Windows\System32\svchost.exe
+** 2688	624	svchost.exe	0xcc87be94b080	2	-	0	False	2026-10-02 22:48:51.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s WpnService	C:\Windows\system32\svchost.exe
+** 1156	624	svchost.exe	0xcc87be933080	4	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s UserManager	C:\Windows\system32\svchost.exe
+*** 3200	1156	sihost.exe	0xcc87c316e240	9	-	1	False	2026-10-02 22:48:54.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\sihost.exe	sihost.exe	C:\Windows\system32\sihost.exe
+** 392	624	svchost.exe	0xcc87c3032080	2	-	0	False	2026-10-02 22:48:47.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k LocalSystemNetworkRestricted -p -s NcbService	C:\Windows\System32\svchost.exe
+** 1928	624	svchost.exe	0xcc87be93b080	5	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k NetworkService -p -s LanmanWorkstation	C:\Windows\System32\svchost.exe
+** 3208	624	svchost.exe	0xcc87c316c0c0	3	-	1	False	2026-10-02 22:48:54.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k UnistackSvcGroup -s CDPUserSvc	C:\Windows\system32\svchost.exe
+** 2444	624	svchost.exe	0xcc87be932080	4	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k LocalService -s W32Time	C:\Windows\system32\svchost.exe
+** 2572	624	wlms.exe	0xcc87be949080	2	-	0	False	2026-10-02 22:48:51.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\wlms\wlms.exe	C:\Windows\system32\wlms\wlms.exe	C:\Windows\system32\wlms\wlms.exe
+** 1808	624	svchost.exe	0xcc87be92c080	3	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k netsvcs -p -s ShellHWDetection	C:\Windows\System32\svchost.exe
+** 1300	624	svchost.exe	0xcc87c317a080	3	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s gpsvc	C:\Windows\system32\svchost.exe
+** 1940	624	svchost.exe	0xcc87be939080	4	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k LocalService -p 
+... [truncated for report length] ...
+
+\end{lstlisting}
+
+\labstep{Evidence \#3 -- windows.netscan and windows.malfind}
+
+\evidencebox{3}{Full Volatility 3 \texttt{windows.netscan} and \texttt{windows.malfind} output.}
+
+\begin{lstlisting}
+vol -f meridian-app01.aff4 windows.netscan
+vol -f meridian-app01.aff4 windows.malfind
+\end{lstlisting}
+
+% AUTO:EV3
+\begin{lstlisting}
+===== ev3_netscan.txt =====
+﻿Volatility 3 Framework 2.28.2
+Offset	Proto	LocalAddr	LocalPort	ForeignAddr	ForeignPort	State	PID	Owner	Created
+0xcc87be8a5730	TCPv4	0.0.0.0	49667	0.0.0.0	0	LISTENING	1508	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87be8a5890	TCPv4	0.0.0.0	49667	0.0.0.0	0	LISTENING	1508	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87be8a5890	TCPv6	::	49667	::	0	LISTENING	1508	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87be8a59f0	TCPv4	0.0.0.0	49668	0.0.0.0	0	LISTENING	2224	spoolsv.exe	2026-10-02 22:48:50.000000 UTC
+0xcc87be8a5b50	TCPv4	0.0.0.0	49668	0.0.0.0	0	LISTENING	2224	spoolsv.exe	2026-10-02 22:48:50.000000 UTC
+0xcc87be8a5b50	TCPv6	::	49668	::	0	LISTENING	2224	spoolsv.exe	2026-10-02 22:48:50.000000 UTC
+0xcc87be8a5cb0	TCPv4	0.0.0.0	49669	0.0.0.0	0	LISTENING	624	services.exe	2026-10-02 22:48:52.000000 UTC
+0xcc87be8a5cb0	TCPv6	::	49669	::	0	LISTENING	624	services.exe	2026-10-02 22:48:52.000000 UTC
+0xcc87c206ca60	TCPv4	10.0.2.15	5985	10.0.2.2	56575	CLOSED	4	System	2026-10-02 22:49:20.000000 UTC
+0xcc87c2e27310	TCPv4	10.77.0.30	139	0.0.0.0	0	LISTENING	4	System	2026-10-02 22:48:48.000000 UTC
+0xcc87c2e27470	TCPv4	0.0.0.0	49665	0.0.0.0	0	LISTENING	504	wininit.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e27470	TCPv6	::	49665	::	0	LISTENING	504	wininit.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e275d0	TCPv4	0.0.0.0	49664	0.0.0.0	0	LISTENING	636	lsass.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e275d0	TCPv6	::	49664	::	0	LISTENING	636	lsass.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e27890	TCPv4	0.0.0.0	49666	0.0.0.0	0	LISTENING	1076	svchost.exe	2026-10-02 22:48:48.000000 UTC
+0xcc87c2e27b50	TCPv4	0.0.0.0	49669	0.0.0.0	0	LISTENING	624	services.exe	2026-10-02 22:48:52.000000 UTC
+0xcc87c2e27cb0	TCPv4	0.0.0.0	445	0.0.0.0	0	LISTENING	4	System	2026-10-02 22:48:52.000000 UTC
+0xcc87c2e27cb0	TCPv6	::	445	::	0	LISTENING	4	System	2026-10-02 22:48:52.000000 UTC
+0xcc87c2e28230	TCPv4	0.0.0.0	135	0.0.0.0	0	LISTENING	868	svchost.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e28390	TCPv4	0.0.0.0	49665	0.0.0.0	0	LISTENING	504	wininit.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e284f0	TCPv4	0.0.0.0	135	0.0.0.0	0	LISTENING	868	svchost.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e284f0	TCPv6	::	135	::	0	LISTENING	868	svchost.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e28650	TCPv4	10.0.2.15	139	0.0.0.0	0	LISTENING	4	System	2026-10-02 22:48:49.000000 UTC
+0xcc87c2e28910	TCPv4	0.0.0.0	49664	0.0.0.0	0	LISTENING	636	lsass.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e28e90	TCPv4	0.0.0.0	49666	0.0.0.0	0	LISTENING	1076	svchost.exe	2026-10-02 22:48:48.000000 UTC
+0xcc87c2e28e90	TCPv6	::	49666	::	0	LISTENING	1076	svchost.exe	2026-10-02 22:48:48.000000 UTC
+0xcc87c32994e0	UDPv4	10.77.0.30	138	*	0		4	System	2026-10-02 22:48:48.000000 UTC
+0xcc87c3299670	UDPv4	10.77.0.30	137	*	0		4	System	2026-10-02 22:48:48.000000 UTC
+0xcc87c329fc00	UDPv6	fe80::c006:d141:cc22:9d2f	546	*	0		1336	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c32a1820	UDPv4	10.0.2.15	138	*	0		4	System	2026-10-02 22:48:49.000000 UTC
+0xcc87c32a19b0	UDPv4	10.0.2.15	137	*	0		4	System	2026-10-02 22:48:49.000000 UTC
+0xcc87c32a43e0	UDPv6	fe80::84c3:2d82:c66:3357	546	*	0		1336	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c3391820	UDPv4	0.0.0.0	5355	*	0		1764	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c3392ae0	UDPv4	0.0.0.0	5353	*	0		1764	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c33932b0	UDPv4	0.0.0.0	0	*	0		1764	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c33932b0	UDPv6	::	0	*	0		1764	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c3393440	UDPv4	0.0.0.0	5353	*	0		1764	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c3393440	UDPv6	::	5353	*	0		1764	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c33940c0	UDPv4	0.0.0.0	5355	*	0		1764	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c33940c0	UDPv6	::	5355	*	0		1764	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c35d4820	UDPv4	127.0.0.1	52363	*	0		2300	svchost.exe	2026-10-02 22:48:52.000000 UTC
+0xcc87c35d54a0	UDPv4	0.0.0.0	0	*	0		2444	svchost.exe	2026-10-02 22:48:51.000000 UTC
+0xcc87c35d54a0	UDPv6	::	0	*	0		2444	svchost.exe	2026-10-02 22:48:51.000000 UTC
+0xcc87c35d70c0	UDPv4	0.0.0.0	0	*	0		2444	svchost.exe	2026-10-02 22:48:51.000000 UTC
+0xcc87c3613a60	TCPv4	10.0.2.15	5985	10.0.2.2	54405	ESTABLISHED	4	System	2026-10-02 23:07:30.000000 UTC
+0xcc87c379cb50	TCPv4	0.0.0.0	47001	0.0.0.0	0	LISTENING	4	System	2026-10-02 22:48:53.000000 UTC
+0xcc87c379cb50	TCPv6	::	47001	::	0	LISTENING	4	System	2026-10-02 22:48:53.000000 UTC
+0xcc87c379ccb0	TCPv4	0.0.0.0	5985	0.0.0.0	0	LISTENING	4	System	2026-10-02 22:48:53.000000 UTC
+0xcc87c379ccb0	TCPv6	::	5985	::	0	LISTENING	4	System	2026-10-02 22:48:53.000000 UTC
+0xcc87c37dca40	UDPv4	0.0.0.0	123	*	0		2444	svchost.exe	2026-10-02 22:48:52.000000 UTC
+0xcc87c37dca40	UDPv6	::	123	*	0		2444	svchost.exe	2026-10-02 22:48:52.000000 UTC
+0xcc87c37dd3a0	UDPv4	0.0.0.0	123	*	0		2444	svchost.exe	2026-10-02 22:48:52.000000 UTC
+0xcc87c37f9d70	UDPv4	0.0.0.0	51007	*	0		1764	svchost.exe	2026-10-02 22:48:55.000000 UTC
+0xcc87c37f9d70	UDPv6	::	51007	*	0		1764	svchost.exe	2026-10-02 22:48:55.000000 UTC
+0xcc87c3a20460	TCPv4	10.0.2.15	5985	10.0.2.2	54404	ESTABLISHED	4	System	2026-10-02 23:07:29.000000 UTC
+0xcc87c3b1a910	UDPv4	0.0.0.0	0	*	0		1264	VBoxService.ex	2026-10-02 23:07:38.000000 UTC
+0xcc87c3b4da20	TCPv4	10.0.2.15	49681	48.211.71.196	443	ESTABLISHED	2488	MsMpEng.exe	2026-10-02 23:07:32.000000 UTC
+0xcc87c3b699a0	TCPv4	10.0.2.15	49676	172.178.160.22	443	CLOSED	2488	MsMpEng.exe	2026-10-02 22:49:00.000000 UTC
+0xcc87c3e714a0	TCPv4	10.0.2.15	5985	10.0.2.2	54408	ESTABLISHED	4	System	2026-10-02 23:07:30.000000 UTC
+0xcc87c3eef260	UDPv4	0.0.0.0	0	*	0		2488	MsMpEng.exe	2026-10-02 23:07:32.000000 UTC
+0xcc87c3eef260	UDPv6	::	0	*	0		2488	MsMpEng.exe	2026-10-02 23:07:32.000000 UTC
+0xcc87c3f6ab60	TCPv4	10.0.2.15	49680	48.211.71.196	443	ESTABLISHED	2488	MsMpEng.exe	2026-10-02 23:07:32.000000 UTC
+0xcc87c4063410	TCPv4	10.0.2.15	5985	10.0.2.2	56705	CLOSED	4	System	2026-10-02 22:49:41.000000 UTC
+0xcc87c4176a60	TCPv4	10.0.2.15	5985	10.0.2.2	56563	CLOSED	4	System	2026-10-02 22:49:18.000000 UTC
+0xcc87c4232d20	UDPv4	0.0.0.0	63064	*	0		1764	svchost.exe	2026-10-02 23:07:32.000000 UTC
+0xcc87c4232d20	UDPv6	::	63064	*	0		1764	svchost.exe	2026-10-02 23:07:32.000000 UTC
+
+===== ev3_malfind.txt =====
+﻿Volatility 3 Framework 2.28.2
+PID	Process	Start VPN	End VPN	Tag	Protection	CommitCharge	PrivateMemory	Notes	Hexdump	Disasm
+2488	MsMpEng.exe	0x1f321240000	0x1f32133ffff	VadS	PAGE_EXECUTE_READWRITE	256	1	N/A	
+cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc ................
+cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc ................
+cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc ................
+cc 08 00 42 00 00 00 00 05 48 8b 45 20 48 89 c2 ...B.....H.E H..	cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc 08 00 42 00 00 00 00 05 48 8b 45 20 48 89 c2
+2488	MsMpEng.exe	0x1f321350000	0x1f32154ffff	VadS	PAGE_EXECUTE_READWRITE	512	1	N/A	
+cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc ................
+cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc ................
+cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc ................
+cc 09 00 38 00 09 00 01 05 ba fc ff ff ff 03 55 ...8...........U	cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc 09 00 38 00 09 00 01 05 ba fc ff ff ff 03 55
+2488	MsMpEng.exe	0x1f321c00000	0x1f321d0cfff	VadS	PAGE_EXECUTE_READWRITE	269	1	N/A	
+56 57 53 55 41 54 41 55 41 56 41 57 48 83 ec 28 VWSUATAUAVAWH..(
+4c 8d 3c 24 48 8b e9 48 8d b1 98 38 00 00 ff e2 L.<$H..H...8....
+49 8d 67 28 41 5f 41 5e 41 5d 41 5c 5d 5b 5f 5e I.g(A_A^A]A\][_^
+c3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................	56 57 53 55 41 54 41 55 41 56 41 57 48 83 ec 28 4c 8d 3c 24 48 8b e9 48 8d b1 98 38 00 00 ff e2 49 8d 67 28 41 5f 41 5e 41 5d 41 5c 5d 5b 5f 5e c3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+2488	MsMpEng.exe	0x1f3215d0000	0x1f3216dcfff	VadS	PAGE_EXECUTE_READWRITE	269	1	N/A	
+56 57 53 55 41 54 41 55 41 56 41 57 48 83 ec 28 VWSUATAUAVAWH..(
+4c 8d 3c 24 48 8b e9 48 8d b1 98 38 00 00 ff e2 L.<$H..H...8....
+49 8d 67 28 41 5f 41 5e 41 5d 41 5c 5d 5b 5f 5e I.g(A_A^A]A\][_^
+c3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................	56 57 53 55 41 54 41 55 41 56 41 57 48 83 ec 28 4c 8d 3c 24 48 8b e9 48 8d b1 98 38 00 00 ff e2 49 8d 67 28 41 5f 41 5e 41 5d 41 5c 5d 5b 5f 5e c3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+4500	ServerManager.	0x1c5e3770000	0x1c5e377cfff	VadS	PAGE_EXECUTE_READWRITE	1	1	N/A	
+00 00 00 00 00 00 00 00 40 44 3e c9 c5 01 00 00 ........@D>.....
+40 44 3e c9 c5 01 00 00 00 00 3e c9 c5 01 00 00 @D>.......>.....
+e0 0d 77 e3 c5 01 00 00 00 10 77 e3 c5 01 00 00 ..w.......w.....
+00 d0 77 e3 c5 01 00 00 03 00 00 00 00 00 00 00 ..w.............	00 00 00 00 00 00 00 00 40 44 3e c9 c5 01 00 00 40 44 3e c9 c5 01 00 00 00 00 3e c9 c5 01 00 00 e0 0d 77 e3 c5 01 00 00 00 10 77 e3 c5 01 00 00 00 d0 77 e3 c5 01 00 00 03 00 00 00 00 00 00 00
+4500	ServerManager.	0x7ff440d20000	0x7ff440d2ffff	VadS	PAGE_EXECUTE_READWRITE	1	1	N/A	
+0d 00 00 00 00 02 00 00 00 00 00 00 00 00 00 00 ................
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................	0d 00 00 00 00 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+4500	ServerManager.	0x7ff440d30000	0x7ff440dcffff	VadS	PAGE_EXECUTE_READWRITE	2	1	N/A	
+00 1e 7c 14 f3 01 00 00 80 1c 7c 14 f3 01 00 00 ..|.......|.....
+46 85 69 00 00 00 00 00 00 00 00 00 00 00 08 00 F.i.............
+c0 94 2d 16 f3 01 00 00 c0 fe 7b 14 f3 01 00 00 ..-.......{.....
+2f 89 ba 14 f3 01 00 00 6a 06 00 00 00 00 00 00 /.......j.......	00 1e 7c 14 f3 01 00 00 80 1c 7c 14 f3 01 00 00 46 85 69 00 00 00 00 00 00 00 00 00 00 00 08 00 c0 94 2d 16 f3 01 00 00 c0 fe 7b 14 f3 01 00 00 2f 89 ba 14 f3 01 00 00 6a 06 00 00 00 00 00 00
+1832	wsmprovhost.ex	0x7df4f6bb0000	0x7df4f6bbffff	VadS	PAGE_EXECUTE_READWRITE	1	1	N/A	
+00 00 00 00 00 00 00 00 78 0d 00 00 00 00 00 00 ........x.......
+0c 00 00 00 49 c7 c2 00 00 00 00 48 b8 50 4a ff ....I......H.PJ.
+bf ff 7f 00 00 ff e0 49 c7 c2 01 00 00 00 48 b8 .......I......H.
+50 4a ff bf ff 7f 00 00 ff e0 49 c7 c2 02 00 00 PJ........I.....	00 00 00 00 00 00 00 00 78 0d 00 00 00 00 00 00 0c 00 00 00 49 c7 c2 00 00 00 00 48 b8 50 4a ff bf ff 7f 00 00 ff e0 49 c7 c2 01 00 00 00 48 b8 50 4a ff bf ff 7f 00 00 ff e0 49 c7 c2 02 00 00
+1832	wsmprovhost.ex	0x2aee02d0000	0x2aee02dcfff	VadS	PAGE_EXECUTE_READWRITE	1	1	N/A	
+00 00 00 00 00 00 00 00 40 75 82 f8 ae 02 00 00 ........@u......
+40 75 82 f8 ae 02 00 00 00 00 82 f8 ae 02 00 00 @u..............
+e0 0d 2d e0 ae 02 00 00 00 10 2d e0 ae 02 00 00 ..-.......-.....
+00 d0 2d e0 ae 02 00 00 01 00 00 00 00 00 00 00 ..-.............	00 00 00 00 00 00 00 00 40 75 82 f8 ae 02 00 00 40 75 82 f8 ae 02 00 00 00 00 82 f8 ae 02 00 00 e0 0d 2d e0 ae 02 00 00 00 10 2d e0 ae 02 00 00 00 d0 2d e0 ae 02 00 00 01 00 00 00 00 00 00 00
+1832	wsmprovhost.ex	0x7df4f6bc0000	0x7df4f6c5ffff	VadS	PAGE_EXECUTE_READWRITE	2	1	N/A	
+d8 ff ff ff ff ff ff ff 08 00 00 00 00 00 00 00 ................
+01 00 00 00 00 00 00 00 00 02 0e 03 38 00 00 00 ............8...
+68 01 d7 07 0c 00 00 00 d8 5d 95 be ff 7f 00 00 h........]......
+00 10 93 be ff 7f 00 00 08 4a ac be ff 7f 00 00 .........J......	d8 ff ff ff ff ff ff ff 08 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 00 02 0e 03 38 00 00 00 68 01 d7 07 0c 00 00 00 d8 5d 95 be ff 7f 00 00 00 10 93 be ff 7f 00 00 08 4a ac be ff 7f 00 00
+4244	wsmprovhost.ex	0x7df472aa0000	0x7df472aaffff	VadS	PAGE_EXECUTE_READWRITE	1	1	N/A	
+00 00 00 00 00 00 00 00 78 0d 00 00 00 00 00 00 ........x.......
+0c 00 00 00 49 c7 c2 00 00 00 00 48 b8 50 4a ff ....I.
+... [truncated for report length] ...
+
+\end{lstlisting}
+
+\labstep{Critical thinking \#1}
+
+In the acquisition-time \texttt{pstree}/\texttt{cmdline} output, \texttt{certutil.exe} had already exited (expected for short \texttt{hashfile} runs), while \texttt{winpmem.exe} appears under the interactive Administrator session used for live acquisition (PID 2164; console-launched imager parentage, not a service or Office parent). \texttt{windows.malfind} returned multiple \texttt{PAGE\_EXECUTE\_READWRITE} regions: several under \texttt{MsMpEng.exe} (Microsoft Defender, PID 2488), plus additional RWX hits in \texttt{ServerManager.exe}, \texttt{wmiprvhost.exe}, and \texttt{wsmprovhost.exe}. Per the module lecture, Defender RWX regions are a known false-positive class and do \emph{not} by themselves demonstrate attacker process injection. The non-Defender RWX hits are also consistent with legitimate Windows management/remoting components on a freshly built server and likewise do not prove staged LOLBin or Run-key activity injected code. Local \texttt{certutil} execution and the HKCU Run key leave no injected-VAD signature once those processes exit, so a malfind view dominated by Defender and built-in management hosts is the expected outcome for this staging and must not be over-read as ``no attacker activity'' or as confirmed injection.
+
+\labpart{3. Part B: Disk artifact triage}
+
+\labstep{Evidence \#4 -- Prefetch (PECmd / CERTUTIL)}
+
+\evidencebox{4}{\texttt{CERTUTIL.EXE} Prefetch row(s): run count, last-run timestamp(s), directories/files referenced.}
+
+% AUTO:EV4
+\begin{lstlisting}
+PECmd against C:\Windows\Prefetch on MERIDIAN-APP01 (Windows Server 2022 Desktop Experience).
+
+Prefetch configuration at collection time:
+  HKLM\...\PrefetchParameters EnablePrefetcher=3 EnableSuperfetch=3
+  SysMain service = Running (Automatic)
+
+PECmd version 2026.5.0
+Found 0 Prefetch files
+Processed 0 out of 0 files
+
+CERTUTIL.EXE Prefetch row(s): NONE (0 .pf files after interactive + console staging).
+
+Staging corroboration (pf_stage2.log, wall-clock 2026-10-02 20:18:11 -04:00):
+  certutil -hashfile C:\Windows\System32\calc.exe SHA256   (x6)
+  certutil -hashfile C:\Windows\System32\notepad.exe SHA256 (x1)
+  Each: "CertUtil: -hashfile command completed successfully."
+  SHA256(calc)=4208893c871d2499f184e3f0f2554da89f451fa9e98d95fc9516c5ae8f2b3bbd
+  SHA256(notepad)=b65079972e88691fe19b5d4d5eb3159f6cd627fb6c4f09ae9b9df959330082df
+
+Server SKU did not materialize application Prefetch despite EnablePrefetcher=3,
+SysMain, ACL repair (SYSTEM FullControl), ProcessIdleTasks, and reboot.
+\end{lstlisting}
+
+\labstep{Evidence \#5 -- Amcache}
+
+\evidencebox{5}{Amcache entry for \texttt{certutil.exe} (or \texttt{calc.exe}/\texttt{notepad.exe}): SHA-1, path, first-execution timestamp.}
+
+% AUTO:EV5
+\begin{lstlisting}
+AmcacheParser 2026.5.0 vs VSS Amcache.hve (+LOG1 replay) from MERIDIAN-APP01.
+Command: AmcacheParser.exe -f Amcache.hve -i --csv <out>
+New-format hive; 98 file entries after log replay.
+
+Target search (certutil.exe / calc.exe / notepad.exe / win32calc.exe):
+  NO InventoryApplicationFile rows for those names.
+  Hive UTF-16 scan only hits VBoxCertUtil.exe (Guest Additions), not System32\certutil.exe.
+  Amcache.hve LastWrite stayed 2026-10-02 20:21:08 -04:00 after further staging.
+
+Amcache OS-component rows that DID index (-i):
+Name,FullPath,SHA1,FileKeyLastWriteTimestamp,IsOsComponent
+powershell.exe,c:\windows\system32\windowspowershell\v1.0\powershell.exe,
+  5b1a36a8b206fe9daece7e2cd702cdd4e10bb895,2026-10-02 23:36:45,True
+CompatTelRunner.exe,c:\windows\system32\compattelrunner.exe,
+  33999d1f1943f1319f2cac5b653966f0eecf7654,2026-10-02 23:36:20,True
+
+Amcache ShortCuts (notepad.lnk, not notepad.exe execution):
+notepad.lnk, C:\ProgramData\...\Accessories\Notepad.lnk, 2026-10-02 23:37:42
+
+On-host SHA-1 (Get-FileHash) of staged binaries:
+certutil.exe|C:\Windows\System32\certutil.exe|0d1f72efaf905a80fc5f1edc4e85889183f94fab
+calc.exe|C:\Windows\System32\calc.exe|80865a5563eb92b8653a5af3db371d7bc1674b2d
+notepad.exe|C:\Windows\System32\notepad.exe|58bf532f93949cc62821273f778b87da85787afa
+
+AppCompatCache corroboration (exported AppCompatCache value):
+  Path = C:\Windows\system32\certutil.exe
+\end{lstlisting}
+
+\labstep{Evidence \#6 -- Registry Run key}
+
+\evidencebox{6}{\texttt{reg query} output showing \texttt{MeridianSyncHelper}.}
+
+\begin{lstlisting}
+reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Run"
+\end{lstlisting}
+
+% AUTO:EV6
+\begin{lstlisting}
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
+    MeridianSyncHelper    REG_SZ    powershell.exe -NoProfile -WindowStyle Hidden -Command "Get-Date | Out-File C:\Meridian\synclog.txt -Append"
+
+2026-10-02 20:32:15 -04:00
+\end{lstlisting}
+
+\labstep{Critical thinking \#2}
+
+Prefetch supplied \emph{no} last-run timestamp or run count on this Server~2022 host
+(Evidence~\#4: PECmd found 0~\texttt{.pf} files), so it cannot be used as a positive
+clock for \texttt{certutil}. Amcache \texttt{FileKeyLastWriteTimestamp} values that
+did index---\texttt{powershell.exe} at 2026-10-02 23:36:45~UTC and
+\texttt{CompatTelRunner.exe} at 23:36:20~UTC---sit in the same calendar-evening
+window as first-boot inventory, while the Section~1.2 wall-clock
+(2026-10-02 20:32:15~$-$04:00) and the \path{pf_stage2.log} certutil transcript
+(20:18:11~$-$04:00) mark the operator staging session about an hour later.
+AppCompatCache independently records \path{C:\Windows\system32\certutil.exe},
+and Evidence~\#6 shows \texttt{MeridianSyncHelper} at that same wall-clock.
+Together these clocks corroborate lab-driven activity the same evening; the
+missing Prefetch/Amcache LOLBin rows are a Server SKU telemetry gap, not evidence
+that staging failed. Prefetch run count, had it existed, would still prove only
+that \texttt{certutil.exe} launched $N$ times from an associated path---not which
+arguments were used or that any malicious action occurred.
+
+\labpart{4. Part C: Static malware-triage survey}
+
+\labstep{Evidence \#7 -- static triage of svcupdate.bin}
+
+\evidencebox{7}{Output of \texttt{file}, \texttt{sha256sum}, \texttt{strings -a -n 6}, and \texttt{xxd | head -n 12}.}
+
+\begin{lstlisting}
+=== file svcupdate.bin ===
+svcupdate.bin: data (minimal MZ stub; not a valid PE)
+
+=== sha256sum svcupdate.bin ===
+3f77970a8c10f1af034e984b3b06f76db1708d377e8c3f9085af95823c9e2d73  svcupdate.bin
+
+=== strings -a -n 6 svcupdate.bin ===
+MeridianLoader/2.1 (c) internal build
+MRD-STAGE2-INIT
+sync-update.meridian-relay.test
+
+=== xxd svcupdate.bin | head -n 12 ===
+00000000: 4d 5a 90 90 90 90 90 90 90 90 90 90 90 90 90 90  MZ..............
+00000010: 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90  ................
+00000020: 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90  ................
+00000030: 90 90 90 90 90 90 90 90 90 90 90 90 4d 65 72 69  ............Meri
+00000040: 64 69 61 6e 4c 6f 61 64 65 72 2f 32 2e 31 20 28  dianLoader/2.1 (
+00000050: 63 29 20 69 6e 74 65 72 6e 61 6c 20 62 75 69 6c  c) internal buil
+00000060: 64 00 4d 00 52 00 44 00 2d 00 53 00 54 00 41 00  d.M.R.D.-.S.T.A.
+00000070: 47 00 45 00 32 00 2d 00 49 00 4e 00 49 00 54 00  G.E.2.-.I.N.I.T.
+00000080: 90 90 90 31 c0 50 68 00 00 00 00 73 79 6e 63 2d  ...1.Ph....sync-
+00000090: 75 70 64 61 74 65 2e 6d 65 72 69 64 69 61 6e 2d  update.meridian-
+000000a0: 72 65 6c 61 79 2e 74 65 73 74 00 00 00 00 00 00  relay.test......
+000000b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+\end{lstlisting}
+
+\labstep{Taxonomy classification}
+
+\textbf{Classification: loader / downloader.}
+
+Three static indicators:
+\begin{enumerate}
+  \item Banner string \texttt{MeridianLoader/2.1 (c) internal build} names the component as a loader family rather than ransomware or a worm.
+  \item UTF-16LE marker \texttt{MRD-STAGE2-INIT} is a stage-2 handoff token typical of multi-stage loaders that initialize a subsequent payload.
+  \item Embedded C2-style hostname \texttt{sync-update.meridian-relay.test} is a retrieval/beacon endpoint indicator aligned with downloader behavior, not encryption or kernel rootkit structures.
+\end{enumerate}
+
+The file is only a minimal \texttt{MZ} stub (not a valid PE), matching the lab's inert stand-in: structural taxonomy signals without runnable code.
+
+\labstep{Critical thinking \#3}
+
+\begin{enumerate}
+  \item Weakest sole classification evidence: the leading \texttt{MZ} bytes. Benign Windows binaries also start with \texttt{MZ}, so that marker alone does not support malware taxonomy.
+  \item Strongest loader/downloader-specific indicator: the combination of the \texttt{MeridianLoader/2.1} banner with \texttt{MRD-STAGE2-INIT}, which encodes staged loading rather than ransomware notes, worm replication, or backdoor implant language by itself. The C2 hostname further supports remote retrieval over other categories.
+\end{enumerate}
+
+\labpart{5. Graded challenge: hunt hypothesis}
+
+\textbf{Claim.} After Parts A--C, MERIDIAN-APP01 shows operator-visible HKCU Run-key
+persistence (\texttt{MeridianSyncHelper}) and LOLBin execution evidence, but memory
+triage did not show injected code. A second, quieter persistence mechanism that
+would survive interactive logoff and avoid the Run key is a user or system
+Scheduled Task whose action launches \texttt{powershell.exe} or a lookalike helper
+under a benign task name.
+
+\textbf{Next artifact.} Enumerate scheduled task XML under
+\path{C:\Windows\System32\Tasks} and the Task Scheduler registry keys
+(\path{HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache}),
+searching for task actions that reference \texttt{powershell.exe},
+\path{C:\Meridian}, or \texttt{sync-update.meridian-relay.test}. This fits the
+evidence because the staged Run key already abuses PowerShell for silent upkeep,
+and task XML is a parallel ATT\&CK persistence class that would not appear in the
+HKCU Run query we already ran, nor necessarily in a clean \texttt{malfind}.
+
+\textbf{Negative result.} If no such task exists, the investigation still advances:
+the Run key remains the only confirmed persistence on this host from Parts A--B,
+narrowing follow-up to service \texttt{ImagePath} values and WMI subscriptions
+rather than re-checking Run keys. Either outcome converts a vague ``quieter
+persistence'' concern into a tested, closed question grounded in disk artifacts
+memory alone cannot settle after process exit.
+
+\labpart{6. References}
+
+\begin{itemize}
+  \item NIST SP 800-61 Revision 2; IETF RFC 3227.
+  \item Volatility 3 Documentation. \url{https://volatility3.readthedocs.io/}
+  \item Velocidex WinPmem. \url{https://github.com/Velocidex/WinPmem}
+  \item Eric Zimmerman / Kroll EZ Tools (PECmd, AmcacheParser). \url{https://ericzimmerman.github.io/}
+  \item MITRE ATT\&CK T1547.001 (Registry Run Keys); T1070.006 (Timestomp).
+\end{itemize}
+
+\end{document}

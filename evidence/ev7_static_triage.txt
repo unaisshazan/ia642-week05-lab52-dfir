@@ -1,0 +1,25 @@
+﻿=== file svcupdate.bin ===
+svcupdate.bin: data (minimal MZ stub; not a valid PE)
+
+=== sha256sum svcupdate.bin ===
+3f77970a8c10f1af034e984b3b06f76db1708d377e8c3f9085af95823c9e2d73  svcupdate.bin
+
+=== strings -a -n 6 svcupdate.bin ===
+MeridianLoader/2.1 (c) internal build
+sync-update.meridian-relay.test
+dMRD-STAGE2-INIT
+
+
+=== xxd svcupdate.bin | head -n 12 ===
+00000000: 4d 5a 90 90 90 90 90 90 90 90 90 90 90 90 90 90 MZ..............
+00000010: 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 ................
+00000020: 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 ................
+00000030: 90 90 90 90 90 90 90 90 90 90 90 90 4d 65 72 69 ............Meri
+00000040: 64 69 61 6e 4c 6f 61 64 65 72 2f 32 2e 31 20 28 dianLoader/2.1 (
+00000050: 63 29 20 69 6e 74 65 72 6e 61 6c 20 62 75 69 6c c) internal buil
+00000060: 64 00 4d 00 52 00 44 00 2d 00 53 00 54 00 41 00 d.M.R.D.-.S.T.A.
+00000070: 47 00 45 00 32 00 2d 00 49 00 4e 00 49 00 54 00 G.E.2.-.I.N.I.T.
+00000080: 90 90 90 31 c0 50 68 00 00 00 00 73 79 6e 63 2d ...1.Ph....sync-
+00000090: 75 70 64 61 74 65 2e 6d 65 72 69 64 69 61 6e 2d update.meridian-
+000000a0: 72 65 6c 61 79 2e 74 65 73 74 00 00 00 00 00 00 relay.test......
+000000b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................

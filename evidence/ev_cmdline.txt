@@ -1,0 +1,88 @@
+﻿Volatility 3 Framework 2.28.2
+PID	Process	Args
+4	System	-
+100	Registry	-
+332	smss.exe	\SystemRoot\System32\smss.exe
+428	csrss.exe	%SystemRoot%\system32\csrss.exe ObjectDirectory=\Windows SharedSection=1024,20480,768 Windows=On SubSystemType=Windows ServerDll=basesrv,1 ServerDll=winsrv:UserServerDllInitialization,3 ServerDll=sxssrv,4 ProfileControl=Off MaxRequestThreads=16
+496	csrss.exe	%SystemRoot%\system32\csrss.exe ObjectDirectory=\Windows SharedSection=1024,20480,768 Windows=On SubSystemType=Windows ServerDll=basesrv,1 ServerDll=winsrv:UserServerDllInitialization,3 ServerDll=sxssrv,4 ProfileControl=Off MaxRequestThreads=16
+504	wininit.exe	wininit.exe
+560	winlogon.exe	winlogon.exe
+624	services.exe	C:\Windows\system32\services.exe
+636	lsass.exe	C:\Windows\system32\lsass.exe
+744	svchost.exe	C:\Windows\system32\svchost.exe -k DcomLaunch -p
+776	fontdrvhost.ex	"fontdrvhost.exe"
+784	fontdrvhost.ex	"fontdrvhost.exe"
+868	svchost.exe	C:\Windows\system32\svchost.exe -k RPCSS -p
+924	svchost.exe	C:\Windows\system32\svchost.exe -k DcomLaunch -p -s LSM
+992	dwm.exe	"dwm.exe"
+424	svchost.exe	C:\Windows\System32\svchost.exe -k LocalServiceNetworkRestricted -p -s lmhosts
+376	svchost.exe	C:\Windows\system32\svchost.exe -k LocalServiceNetworkRestricted -p -s TimeBrokerSvc
+392	svchost.exe	C:\Windows\System32\svchost.exe -k LocalSystemNetworkRestricted -p -s NcbService
+1060	svchost.exe	C:\Windows\system32\svchost.exe -k LocalServiceNoNetwork -p
+1076	svchost.exe	C:\Windows\System32\svchost.exe -k LocalServiceNetworkRestricted -p -s EventLog
+1212	svchost.exe	C:\Windows\system32\svchost.exe -k LocalService -p -s nsi
+1264	VBoxService.ex	C:\Windows\System32\VBoxService.exe
+1300	svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s gpsvc
+1336	svchost.exe	C:\Windows\system32\svchost.exe -k LocalServiceNetworkRestricted -p -s Dhcp
+1356	svchost.exe	C:\Windows\system32\svchost.exe -k LocalService -p -s DispBrokerDesktopSvc
+1372	svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s ProfSvc
+1380	svchost.exe	C:\Windows\system32\svchost.exe -k LocalService -p -s EventSystem
+1388	svchost.exe	C:\Windows\system32\svchost.exe -k LocalService -p -s FontCache
+1408	svchost.exe	C:\Windows\System32\svchost.exe -k netsvcs -p -s Themes
+1508	svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule
+1656	svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s SENS
+1708	svchost.exe	C:\Windows\System32\svchost.exe -k NetworkService -p -s NlaSvc
+1764	svchost.exe	C:\Windows\system32\svchost.exe -k NetworkService -p -s Dnscache
+1776	svchost.exe	C:\Windows\system32\svchost.exe -k LocalServiceNetworkRestricted -p
+1808	svchost.exe	C:\Windows\System32\svchost.exe -k netsvcs -p -s ShellHWDetection
+1852	svchost.exe	C:\Windows\system32\svchost.exe -k LocalServiceNoNetworkFirewall -p
+1928	svchost.exe	C:\Windows\System32\svchost.exe -k NetworkService -p -s LanmanWorkstation
+1940	svchost.exe	C:\Windows\System32\svchost.exe -k LocalService -p -s netprofm
+1960	svchost.exe	C:\Windows\system32\svchost.exe -k LocalServiceNetworkRestricted -p -s WinHttpAutoProxySvc
+1156	svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s UserManager
+2224	spoolsv.exe	C:\Windows\System32\spoolsv.exe
+2264	svchost.exe	C:\Windows\system32\svchost.exe -k NetworkService -p -s CryptSvc
+2280	svchost.exe	C:\Windows\System32\svchost.exe -k utcsvc -p
+2300	svchost.exe	C:\Windows\System32\svchost.exe -k NetSvcs -p -s iphlpsvc
+2388	svchost.exe	C:\Windows\system32\svchost.exe -k appmodel -p -s StateRepository
+2400	svchost.exe	C:\Windows\system32\svchost.exe -k LocalSystemNetworkRestricted -p -s SysMain
+2412	svchost.exe	C:\Windows\System32\svchost.exe -k LocalSystemNetworkRestricted -p -s TrkWks
+2432	svchost.exe	C:\Windows\System32\svchost.exe -k smbsvcs -s LanmanServer
+2444	svchost.exe	C:\Windows\system32\svchost.exe -k LocalService -s W32Time
+2488	MsMpEng.exe	"C:\Program Files\Windows Defender\MsMpEng.exe"
+2524	svchost.exe	C:\Windows\System32\svchost.exe -k NetworkService -p -s WinRM
+2572	wlms.exe	C:\Windows\system32\wlms\wlms.exe
+2584	svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s Winmgmt
+2688	svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s WpnService
+2668	AggregatorHost	AggregatorHost.exe
+3176	MicrosoftEdgeU	"C:\Program Files (x86)\Microsoft\EdgeUpdate\MicrosoftEdgeUpdate.exe" /c
+3200	sihost.exe	sihost.exe
+3208	svchost.exe	C:\Windows\system32\svchost.exe -k UnistackSvcGroup -s CDPUserSvc
+3272	svchost.exe	C:\Windows\system32\svchost.exe -k UnistackSvcGroup -s WpnUserService
+3352	taskhostw.exe	taskhostw.exe {222A245B-E637-4AE9-A93F-A59CA119A75E}
+3488	svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s TokenBroker
+3540	svchost.exe	C:\Windows\System32\svchost.exe -k LocalSystemNetworkRestricted -p -s TabletInputService
+3580	ctfmon.exe	"ctfmon.exe"
+3752	svchost.exe	C:\Windows\system32\svchost.exe -k appmodel -p -s camsvc
+3808	userinit.exe	-
+3816	svchost.exe	C:\Windows\system32\svchost.exe -k LocalService -p -s CDPSvc
+3860	explorer.exe	C:\Windows\Explorer.EXE
+2888	NisSrv.exe	"C:\Program Files\Windows Defender\NisSrv.exe"
+3464	StartMenuExper	"C:\Windows\SystemApps\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\StartMenuExperienceHost.exe" -ServerName:App.AppXywbrabmsek0gm3tkwpr5kwzbs55tkqay.mca
+3996	TextInputHost.	"C:\Windows\SystemApps\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\TextInputHost.exe" -ServerName:InputApp.AppXjd5de1g66v206tj52m9d0dtpppx4cgpn.mca
+4128	RuntimeBroker.	C:\Windows\System32\RuntimeBroker.exe -Embedding
+4268	SearchApp.exe	"C:\Windows\SystemApps\Microsoft.Windows.Search_cw5n1h2txyewy\SearchApp.exe" -ServerName:CortanaUI.AppX8z9r6jm96hw4bsbneegw0kyxx296wr9t.mca
+4392	RuntimeBroker.	C:\Windows\System32\RuntimeBroker.exe -Embedding
+4500	ServerManager.	"C:\Windows\system32\ServerManager.exe" 
+5068	VBoxTray.exe	"C:\Windows\System32\VBoxTray.exe" 
+3812	svchost.exe	C:\Windows\System32\svchost.exe -k LocalServiceNoNetwork -p -s DPS
+4312	msdtc.exe	C:\Windows\System32\msdtc.exe
+5036	svchost.exe	C:\Windows\System32\svchost.exe -k LocalSystemNetworkRestricted -p -s StorSvc
+3956	svchost.exe	C:\Windows\system32\svchost.exe -k LocalSystemNetworkRestricted -p -s UALSVC
+2024	svchost.exe	C:\Windows\system32\svchost.exe -k ClipboardSvcGroup -p -s cbdhsvc
+2516	svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s UsoSvc
+1832	wsmprovhost.ex	C:\Windows\system32\wsmprovhost.exe -Embedding
+3468	net.exe	-
+4244	wsmprovhost.ex	C:\Windows\system32\wsmprovhost.exe -Embedding
+2164	winpmem.exe	"C:\Meridian\winpmem.exe" acquire --progress --verbose --nosparse meridian-app01.raw 
+2852	conhost.exe	\??\C:\Windows\system32\conhost.exe 0x4

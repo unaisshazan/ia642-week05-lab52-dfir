@@ -1,0 +1,26 @@
+﻿AmcacheParser version 2026.5.0 against VSS-collected Amcache.hve (+ LOG1 replay) from MERIDIAN-APP01.
+Command: AmcacheParser.exe -f Amcache.hve -i --csv <out>
+Hive format: new-format; 98 file entries; 67 unassociated + 31 program-associated after log replay.
+
+Target search (certutil.exe / calc.exe / notepad.exe / win32calc.exe):
+  No InventoryApplicationFile / UnassociatedFileEntries / AssociatedFileEntries rows for those names.
+  UTF-16 string scan of the hive only hits VBoxCertUtil.exe (VirtualBox Guest Additions), not System32\certutil.exe.
+  Amcache.hve LastWriteTimestamp remained 2026-10-02 20:21:08 -04:00 after additional staging; InventoryApplicationFile did not index the LOLBin launches on this Server SKU.
+
+Amcache OS-component rows that DID index (same evening window; -i include):
+ApplicationName,FileKeyLastWriteTimestamp,SHA1,IsOsComponent,FullPath,Name
+Unassociated,2026-10-02 23:36:45,5b1a36a8b206fe9daece7e2cd702cdd4e10bb895,True,c:\windows\system32\windowspowershell\v1.0\powershell.exe,powershell.exe
+Unassociated,2026-10-02 23:36:20,33999d1f1943f1319f2cac5b653966f0eecf7654,True,c:\windows\system32\compattelrunner.exe,CompatTelRunner.exe
+
+Amcache ShortCuts (related notepad artifact, not notepad.exe execution row):
+notepad.lnk|508c89a410e13c2b,C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Accessories\Notepad.lnk,2026-10-02 23:37:42
+
+On-host SHA-1 of staged binaries (Get-FileHash -Algorithm SHA1), wall-clock staging 2026-10-02 20:18--20:32 -04:00:
+certutil.exe|C:\Windows\System32\certutil.exe|0d1f72efaf905a80fc5f1edc4e85889183f94fab
+calc.exe|C:\Windows\System32\calc.exe|80865a5563eb92b8653a5af3db371d7bc1674b2d
+notepad.exe|C:\Windows\System32\notepad.exe|58bf532f93949cc62821273f778b87da85787afa
+win32calc.exe|C:\Windows\System32\win32calc.exe|12c7e6c026e712ae38b12994eff14b33afb6f84d
+
+AppCompatCache / ShimCache corroboration (reg save of AppCompatCache value; UTF-16 path recovered from hive export):
+  Path = C:\Windows\system32\certutil.exe
+  (Sibling AppCompat artifact confirming the LOLBin path was recorded even though Amcache InventoryApplicationFile did not emit a certutil/calc/notepad row.)

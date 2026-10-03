@@ -1,0 +1,138 @@
+===== ev3_netscan.txt =====
+﻿Volatility 3 Framework 2.28.2
+Offset	Proto	LocalAddr	LocalPort	ForeignAddr	ForeignPort	State	PID	Owner	Created
+0xcc87be8a5730	TCPv4	0.0.0.0	49667	0.0.0.0	0	LISTENING	1508	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87be8a5890	TCPv4	0.0.0.0	49667	0.0.0.0	0	LISTENING	1508	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87be8a5890	TCPv6	::	49667	::	0	LISTENING	1508	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87be8a59f0	TCPv4	0.0.0.0	49668	0.0.0.0	0	LISTENING	2224	spoolsv.exe	2026-10-02 22:48:50.000000 UTC
+0xcc87be8a5b50	TCPv4	0.0.0.0	49668	0.0.0.0	0	LISTENING	2224	spoolsv.exe	2026-10-02 22:48:50.000000 UTC
+0xcc87be8a5b50	TCPv6	::	49668	::	0	LISTENING	2224	spoolsv.exe	2026-10-02 22:48:50.000000 UTC
+0xcc87be8a5cb0	TCPv4	0.0.0.0	49669	0.0.0.0	0	LISTENING	624	services.exe	2026-10-02 22:48:52.000000 UTC
+0xcc87be8a5cb0	TCPv6	::	49669	::	0	LISTENING	624	services.exe	2026-10-02 22:48:52.000000 UTC
+0xcc87c206ca60	TCPv4	10.0.2.15	5985	10.0.2.2	56575	CLOSED	4	System	2026-10-02 22:49:20.000000 UTC
+0xcc87c2e27310	TCPv4	10.77.0.30	139	0.0.0.0	0	LISTENING	4	System	2026-10-02 22:48:48.000000 UTC
+0xcc87c2e27470	TCPv4	0.0.0.0	49665	0.0.0.0	0	LISTENING	504	wininit.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e27470	TCPv6	::	49665	::	0	LISTENING	504	wininit.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e275d0	TCPv4	0.0.0.0	49664	0.0.0.0	0	LISTENING	636	lsass.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e275d0	TCPv6	::	49664	::	0	LISTENING	636	lsass.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e27890	TCPv4	0.0.0.0	49666	0.0.0.0	0	LISTENING	1076	svchost.exe	2026-10-02 22:48:48.000000 UTC
+0xcc87c2e27b50	TCPv4	0.0.0.0	49669	0.0.0.0	0	LISTENING	624	services.exe	2026-10-02 22:48:52.000000 UTC
+0xcc87c2e27cb0	TCPv4	0.0.0.0	445	0.0.0.0	0	LISTENING	4	System	2026-10-02 22:48:52.000000 UTC
+0xcc87c2e27cb0	TCPv6	::	445	::	0	LISTENING	4	System	2026-10-02 22:48:52.000000 UTC
+0xcc87c2e28230	TCPv4	0.0.0.0	135	0.0.0.0	0	LISTENING	868	svchost.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e28390	TCPv4	0.0.0.0	49665	0.0.0.0	0	LISTENING	504	wininit.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e284f0	TCPv4	0.0.0.0	135	0.0.0.0	0	LISTENING	868	svchost.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e284f0	TCPv6	::	135	::	0	LISTENING	868	svchost.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e28650	TCPv4	10.0.2.15	139	0.0.0.0	0	LISTENING	4	System	2026-10-02 22:48:49.000000 UTC
+0xcc87c2e28910	TCPv4	0.0.0.0	49664	0.0.0.0	0	LISTENING	636	lsass.exe	2026-10-02 22:48:46.000000 UTC
+0xcc87c2e28e90	TCPv4	0.0.0.0	49666	0.0.0.0	0	LISTENING	1076	svchost.exe	2026-10-02 22:48:48.000000 UTC
+0xcc87c2e28e90	TCPv6	::	49666	::	0	LISTENING	1076	svchost.exe	2026-10-02 22:48:48.000000 UTC
+0xcc87c32994e0	UDPv4	10.77.0.30	138	*	0		4	System	2026-10-02 22:48:48.000000 UTC
+0xcc87c3299670	UDPv4	10.77.0.30	137	*	0		4	System	2026-10-02 22:48:48.000000 UTC
+0xcc87c329fc00	UDPv6	fe80::c006:d141:cc22:9d2f	546	*	0		1336	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c32a1820	UDPv4	10.0.2.15	138	*	0		4	System	2026-10-02 22:48:49.000000 UTC
+0xcc87c32a19b0	UDPv4	10.0.2.15	137	*	0		4	System	2026-10-02 22:48:49.000000 UTC
+0xcc87c32a43e0	UDPv6	fe80::84c3:2d82:c66:3357	546	*	0		1336	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c3391820	UDPv4	0.0.0.0	5355	*	0		1764	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c3392ae0	UDPv4	0.0.0.0	5353	*	0		1764	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c33932b0	UDPv4	0.0.0.0	0	*	0		1764	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c33932b0	UDPv6	::	0	*	0		1764	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c3393440	UDPv4	0.0.0.0	5353	*	0		1764	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c3393440	UDPv6	::	5353	*	0		1764	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c33940c0	UDPv4	0.0.0.0	5355	*	0		1764	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c33940c0	UDPv6	::	5355	*	0		1764	svchost.exe	2026-10-02 22:48:49.000000 UTC
+0xcc87c35d4820	UDPv4	127.0.0.1	52363	*	0		2300	svchost.exe	2026-10-02 22:48:52.000000 UTC
+0xcc87c35d54a0	UDPv4	0.0.0.0	0	*	0		2444	svchost.exe	2026-10-02 22:48:51.000000 UTC
+0xcc87c35d54a0	UDPv6	::	0	*	0		2444	svchost.exe	2026-10-02 22:48:51.000000 UTC
+0xcc87c35d70c0	UDPv4	0.0.0.0	0	*	0		2444	svchost.exe	2026-10-02 22:48:51.000000 UTC
+0xcc87c3613a60	TCPv4	10.0.2.15	5985	10.0.2.2	54405	ESTABLISHED	4	System	2026-10-02 23:07:30.000000 UTC
+0xcc87c379cb50	TCPv4	0.0.0.0	47001	0.0.0.0	0	LISTENING	4	System	2026-10-02 22:48:53.000000 UTC
+0xcc87c379cb50	TCPv6	::	47001	::	0	LISTENING	4	System	2026-10-02 22:48:53.000000 UTC
+0xcc87c379ccb0	TCPv4	0.0.0.0	5985	0.0.0.0	0	LISTENING	4	System	2026-10-02 22:48:53.000000 UTC
+0xcc87c379ccb0	TCPv6	::	5985	::	0	LISTENING	4	System	2026-10-02 22:48:53.000000 UTC
+0xcc87c37dca40	UDPv4	0.0.0.0	123	*	0		2444	svchost.exe	2026-10-02 22:48:52.000000 UTC
+0xcc87c37dca40	UDPv6	::	123	*	0		2444	svchost.exe	2026-10-02 22:48:52.000000 UTC
+0xcc87c37dd3a0	UDPv4	0.0.0.0	123	*	0		2444	svchost.exe	2026-10-02 22:48:52.000000 UTC
+0xcc87c37f9d70	UDPv4	0.0.0.0	51007	*	0		1764	svchost.exe	2026-10-02 22:48:55.000000 UTC
+0xcc87c37f9d70	UDPv6	::	51007	*	0		1764	svchost.exe	2026-10-02 22:48:55.000000 UTC
+0xcc87c3a20460	TCPv4	10.0.2.15	5985	10.0.2.2	54404	ESTABLISHED	4	System	2026-10-02 23:07:29.000000 UTC
+0xcc87c3b1a910	UDPv4	0.0.0.0	0	*	0		1264	VBoxService.ex	2026-10-02 23:07:38.000000 UTC
+0xcc87c3b4da20	TCPv4	10.0.2.15	49681	48.211.71.196	443	ESTABLISHED	2488	MsMpEng.exe	2026-10-02 23:07:32.000000 UTC
+0xcc87c3b699a0	TCPv4	10.0.2.15	49676	172.178.160.22	443	CLOSED	2488	MsMpEng.exe	2026-10-02 22:49:00.000000 UTC
+0xcc87c3e714a0	TCPv4	10.0.2.15	5985	10.0.2.2	54408	ESTABLISHED	4	System	2026-10-02 23:07:30.000000 UTC
+0xcc87c3eef260	UDPv4	0.0.0.0	0	*	0		2488	MsMpEng.exe	2026-10-02 23:07:32.000000 UTC
+0xcc87c3eef260	UDPv6	::	0	*	0		2488	MsMpEng.exe	2026-10-02 23:07:32.000000 UTC
+0xcc87c3f6ab60	TCPv4	10.0.2.15	49680	48.211.71.196	443	ESTABLISHED	2488	MsMpEng.exe	2026-10-02 23:07:32.000000 UTC
+0xcc87c4063410	TCPv4	10.0.2.15	5985	10.0.2.2	56705	CLOSED	4	System	2026-10-02 22:49:41.000000 UTC
+0xcc87c4176a60	TCPv4	10.0.2.15	5985	10.0.2.2	56563	CLOSED	4	System	2026-10-02 22:49:18.000000 UTC
+0xcc87c4232d20	UDPv4	0.0.0.0	63064	*	0		1764	svchost.exe	2026-10-02 23:07:32.000000 UTC
+0xcc87c4232d20	UDPv6	::	63064	*	0		1764	svchost.exe	2026-10-02 23:07:32.000000 UTC
+
+===== ev3_malfind.txt =====
+﻿Volatility 3 Framework 2.28.2
+PID	Process	Start VPN	End VPN	Tag	Protection	CommitCharge	PrivateMemory	Notes	Hexdump	Disasm
+2488	MsMpEng.exe	0x1f321240000	0x1f32133ffff	VadS	PAGE_EXECUTE_READWRITE	256	1	N/A	
+cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc ................
+cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc ................
+cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc ................
+cc 08 00 42 00 00 00 00 05 48 8b 45 20 48 89 c2 ...B.....H.E H..	cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc 08 00 42 00 00 00 00 05 48 8b 45 20 48 89 c2
+2488	MsMpEng.exe	0x1f321350000	0x1f32154ffff	VadS	PAGE_EXECUTE_READWRITE	512	1	N/A	
+cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc ................
+cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc ................
+cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc ................
+cc 09 00 38 00 09 00 01 05 ba fc ff ff ff 03 55 ...8...........U	cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc 09 00 38 00 09 00 01 05 ba fc ff ff ff 03 55
+2488	MsMpEng.exe	0x1f321c00000	0x1f321d0cfff	VadS	PAGE_EXECUTE_READWRITE	269	1	N/A	
+56 57 53 55 41 54 41 55 41 56 41 57 48 83 ec 28 VWSUATAUAVAWH..(
+4c 8d 3c 24 48 8b e9 48 8d b1 98 38 00 00 ff e2 L.<$H..H...8....
+49 8d 67 28 41 5f 41 5e 41 5d 41 5c 5d 5b 5f 5e I.g(A_A^A]A\][_^
+c3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................	56 57 53 55 41 54 41 55 41 56 41 57 48 83 ec 28 4c 8d 3c 24 48 8b e9 48 8d b1 98 38 00 00 ff e2 49 8d 67 28 41 5f 41 5e 41 5d 41 5c 5d 5b 5f 5e c3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+2488	MsMpEng.exe	0x1f3215d0000	0x1f3216dcfff	VadS	PAGE_EXECUTE_READWRITE	269	1	N/A	
+56 57 53 55 41 54 41 55 41 56 41 57 48 83 ec 28 VWSUATAUAVAWH..(
+4c 8d 3c 24 48 8b e9 48 8d b1 98 38 00 00 ff e2 L.<$H..H...8....
+49 8d 67 28 41 5f 41 5e 41 5d 41 5c 5d 5b 5f 5e I.g(A_A^A]A\][_^
+c3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................	56 57 53 55 41 54 41 55 41 56 41 57 48 83 ec 28 4c 8d 3c 24 48 8b e9 48 8d b1 98 38 00 00 ff e2 49 8d 67 28 41 5f 41 5e 41 5d 41 5c 5d 5b 5f 5e c3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+4500	ServerManager.	0x1c5e3770000	0x1c5e377cfff	VadS	PAGE_EXECUTE_READWRITE	1	1	N/A	
+00 00 00 00 00 00 00 00 40 44 3e c9 c5 01 00 00 ........@D>.....
+40 44 3e c9 c5 01 00 00 00 00 3e c9 c5 01 00 00 @D>.......>.....
+e0 0d 77 e3 c5 01 00 00 00 10 77 e3 c5 01 00 00 ..w.......w.....
+00 d0 77 e3 c5 01 00 00 03 00 00 00 00 00 00 00 ..w.............	00 00 00 00 00 00 00 00 40 44 3e c9 c5 01 00 00 40 44 3e c9 c5 01 00 00 00 00 3e c9 c5 01 00 00 e0 0d 77 e3 c5 01 00 00 00 10 77 e3 c5 01 00 00 00 d0 77 e3 c5 01 00 00 03 00 00 00 00 00 00 00
+4500	ServerManager.	0x7ff440d20000	0x7ff440d2ffff	VadS	PAGE_EXECUTE_READWRITE	1	1	N/A	
+0d 00 00 00 00 02 00 00 00 00 00 00 00 00 00 00 ................
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................	0d 00 00 00 00 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+4500	ServerManager.	0x7ff440d30000	0x7ff440dcffff	VadS	PAGE_EXECUTE_READWRITE	2	1	N/A	
+00 1e 7c 14 f3 01 00 00 80 1c 7c 14 f3 01 00 00 ..|.......|.....
+46 85 69 00 00 00 00 00 00 00 00 00 00 00 08 00 F.i.............
+c0 94 2d 16 f3 01 00 00 c0 fe 7b 14 f3 01 00 00 ..-.......{.....
+2f 89 ba 14 f3 01 00 00 6a 06 00 00 00 00 00 00 /.......j.......	00 1e 7c 14 f3 01 00 00 80 1c 7c 14 f3 01 00 00 46 85 69 00 00 00 00 00 00 00 00 00 00 00 08 00 c0 94 2d 16 f3 01 00 00 c0 fe 7b 14 f3 01 00 00 2f 89 ba 14 f3 01 00 00 6a 06 00 00 00 00 00 00
+1832	wsmprovhost.ex	0x7df4f6bb0000	0x7df4f6bbffff	VadS	PAGE_EXECUTE_READWRITE	1	1	N/A	
+00 00 00 00 00 00 00 00 78 0d 00 00 00 00 00 00 ........x.......
+0c 00 00 00 49 c7 c2 00 00 00 00 48 b8 50 4a ff ....I......H.PJ.
+bf ff 7f 00 00 ff e0 49 c7 c2 01 00 00 00 48 b8 .......I......H.
+50 4a ff bf ff 7f 00 00 ff e0 49 c7 c2 02 00 00 PJ........I.....	00 00 00 00 00 00 00 00 78 0d 00 00 00 00 00 00 0c 00 00 00 49 c7 c2 00 00 00 00 48 b8 50 4a ff bf ff 7f 00 00 ff e0 49 c7 c2 01 00 00 00 48 b8 50 4a ff bf ff 7f 00 00 ff e0 49 c7 c2 02 00 00
+1832	wsmprovhost.ex	0x2aee02d0000	0x2aee02dcfff	VadS	PAGE_EXECUTE_READWRITE	1	1	N/A	
+00 00 00 00 00 00 00 00 40 75 82 f8 ae 02 00 00 ........@u......
+40 75 82 f8 ae 02 00 00 00 00 82 f8 ae 02 00 00 @u..............
+e0 0d 2d e0 ae 02 00 00 00 10 2d e0 ae 02 00 00 ..-.......-.....
+00 d0 2d e0 ae 02 00 00 01 00 00 00 00 00 00 00 ..-.............	00 00 00 00 00 00 00 00 40 75 82 f8 ae 02 00 00 40 75 82 f8 ae 02 00 00 00 00 82 f8 ae 02 00 00 e0 0d 2d e0 ae 02 00 00 00 10 2d e0 ae 02 00 00 00 d0 2d e0 ae 02 00 00 01 00 00 00 00 00 00 00
+1832	wsmprovhost.ex	0x7df4f6bc0000	0x7df4f6c5ffff	VadS	PAGE_EXECUTE_READWRITE	2	1	N/A	
+d8 ff ff ff ff ff ff ff 08 00 00 00 00 00 00 00 ................
+01 00 00 00 00 00 00 00 00 02 0e 03 38 00 00 00 ............8...
+68 01 d7 07 0c 00 00 00 d8 5d 95 be ff 7f 00 00 h........]......
+00 10 93 be ff 7f 00 00 08 4a ac be ff 7f 00 00 .........J......	d8 ff ff ff ff ff ff ff 08 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 00 02 0e 03 38 00 00 00 68 01 d7 07 0c 00 00 00 d8 5d 95 be ff 7f 00 00 00 10 93 be ff 7f 00 00 08 4a ac be ff 7f 00 00
+4244	wsmprovhost.ex	0x7df472aa0000	0x7df472aaffff	VadS	PAGE_EXECUTE_READWRITE	1	1	N/A	
+00 00 00 00 00 00 00 00 78 0d 00 00 00 00 00 00 ........x.......
+0c 00 00 00 49 c7 c2 00 00 00 00 48 b8 50 4a ff ....I......H.PJ.
+bf ff 7f 00 00 ff e0 49 c7 c2 01 00 00 00 48 b8 .......I......H.
+50 4a ff bf ff 7f 00 00 ff e0 49 c7 c2 02 00 00 PJ........I.....	00 00 00 00 00 00 00 00 78 0d 00 00 00 00 00 00 0c 00 00 00 49 c7 c2 00 00 00 00 48 b8 50 4a ff bf ff 7f 00 00 ff e0 49 c7 c2 01 00 00 00 48 b8 50 4a ff bf ff 7f 00 00 ff e0 49 c7 c2 02 00 00
+4244	wsmprovhost.ex	0x1d2c77f0000	0x1d2c77fcfff	VadS	PAGE_EXECUTE_READWRITE	1	1	N/A	
+00 00 00 00 00 00 00 00 40 75 db df d2 01 00 00 ........@u......
+40 75 db df d2 01 00 00 00 00 db df d2 01 00 00 @u..............
+e0 0d 7f c7 d2 01 00 00 00 10 7f c7 d2 01 00 00 ................
+00 d0 7f c7 d2 01 00 00 01 00 00 00 00 00 00 00 ................	00 00 00 00 00 00 00 00 40 75 db df d2 01 00 00 40 75 db df d2 01 00 00 00 00 db df d2 01 00 00 e0 0d 7f c7 d2 01 00 00 00 10 7f c7 d2 01 00 00 00 d0 7f c7 d2 01 00 00 01 00 00 00 00 00 00 00
+4244	wsmprovhost.ex	0x7df472ab0000	0x7df472b4ffff	VadS	PAGE_EXECUTE_READWRITE	2	1	N/A	
+d8 ff ff ff ff ff ff ff 08 00 00 00 00 00 00 00 ................
+01 00 00 00 00 00 00 00 00 02 0e 03 38 00 00 00 ............8...
+68 01 d7 07 0c 00 00 00 d8 5d 95 be ff 7f 00 00 h........]......
+00 10 93 be ff 7f 00 00 08 4a ac be ff 7f 00 00 .........J......	d8 ff ff ff ff ff ff ff 08 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 00 02 0e 03 38 00 00 00 68 01 d7 07 0c 00 00 00 d8 5d 95 be ff 7f 00 00 00 10 93 be ff 7f 00 00 08 4a ac be ff 7f 00 00

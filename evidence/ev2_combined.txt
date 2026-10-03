@@ -1,0 +1,147 @@
+===== ev2_pslist.txt =====
+﻿Volatility 3 Framework 2.28.2
+PID	PPID	ImageFileName	Offset(V)	Threads	Handles	SessionId	Wow64	CreateTime	ExitTime
+4	0	System	0xcc87be881080	99	-	N/A	False	2026-10-02 22:48:42.000000 UTC	N/A
+100	4	Registry	0xcc87be9ca040	4	-	N/A	False	2026-10-02 22:48:33.000000 UTC	N/A
+332	4	smss.exe	0xcc87c0398040	2	-	N/A	False	2026-10-02 22:48:42.000000 UTC	N/A
+428	420	csrss.exe	0xcc87c20b5080	9	-	0	False	2026-10-02 22:48:44.000000 UTC	N/A
+496	488	csrss.exe	0xcc87c21f3080	10	-	1	False	2026-10-02 22:48:45.000000 UTC	N/A
+504	420	wininit.exe	0xcc87c21f1140	1	-	0	False	2026-10-02 22:48:45.000000 UTC	N/A
+560	488	winlogon.exe	0xcc87c2e36080	5	-	1	False	2026-10-02 22:48:45.000000 UTC	N/A
+624	504	services.exe	0xcc87c2e4d080	6	-	0	False	2026-10-02 22:48:45.000000 UTC	N/A
+636	504	lsass.exe	0xcc87c2e790c0	9	-	0	False	2026-10-02 22:48:45.000000 UTC	N/A
+744	624	svchost.exe	0xcc87c2f3a240	9	-	0	False	2026-10-02 22:48:46.000000 UTC	N/A
+776	504	fontdrvhost.ex	0xcc87c2ee4140	5	-	0	False	2026-10-02 22:48:46.000000 UTC	N/A
+784	560	fontdrvhost.ex	0xcc87c2f42140	5	-	1	False	2026-10-02 22:48:46.000000 UTC	N/A
+868	624	svchost.exe	0xcc87c2f512c0	9	-	0	False	2026-10-02 22:48:46.000000 UTC	N/A
+924	624	svchost.exe	0xcc87c2f83240	4	-	0	False	2026-10-02 22:48:46.000000 UTC	N/A
+992	560	dwm.exe	0xcc87c2feb080	17	-	1	False	2026-10-02 22:48:47.000000 UTC	N/A
+424	624	svchost.exe	0xcc87c302d300	3	-	0	False	2026-10-02 22:48:47.000000 UTC	N/A
+376	624	svchost.exe	0xcc87c3030300	3	-	0	False	2026-10-02 22:48:47.000000 UTC	N/A
+392	624	svchost.exe	0xcc87c3032080	2	-	0	False	2026-10-02 22:48:47.000000 UTC	N/A
+1060	624	svchost.exe	0xcc87c30652c0	2	-	0	False	2026-10-02 22:48:47.000000 UTC	N/A
+1076	624	svchost.exe	0xcc87c3070300	7	-	0	False	2026-10-02 22:48:47.000000 UTC	N/A
+1212	624	svchost.exe	0xcc87c3061080	3	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1264	624	VBoxService.ex	0xcc87c317b080	14	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1300	624	svchost.exe	0xcc87c317a080	3	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1336	624	svchost.exe	0xcc87c3179080	6	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1356	624	svchost.exe	0xcc87c3178080	1	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1372	624	svchost.exe	0xcc87c3177080	3	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1380	624	svchost.exe	0xcc87c3176080	4	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1388	624	svchost.exe	0xcc87c3175080	4	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1408	624	svchost.exe	0xcc87c3174080	2	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1508	624	svchost.exe	0xcc87c3173080	7	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A
+1656	624	svchost.exe	0xcc87c3172080	2	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1708	624	svchost.exe	0xcc87c3171080	5	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1764	624	svchost.exe	0xcc87c3170080	9	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1776	624	svchost.exe	0xcc87c316f080	4	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1808	624	svchost.exe	0xcc87be92c080	3	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1852	624	svchost.exe	0xcc87be938080	11	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1928	624	svchost.exe	0xcc87be93b080	5	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1940	624	svchost.exe	0xcc87be939080	4	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1960	624	svchost.exe	0xcc87be93a080	3	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+1156	624	svchost.exe	0xcc87be933080	4	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A
+2224	624	spoolsv.exe	0xcc87be93d080	7	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2264	624	svchost.exe	0xcc87be940080	8	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2280	624	svchost.exe	0xcc87be93c080	10	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2300	624	svchost.exe	0xcc87be93e080	5	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2388	624	svchost.exe	0xcc87be941080	2	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2400	624	svchost.exe	0xcc87be942080	2	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2412	624	svchost.exe	0xcc87be943080	3	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2432	624	svchost.exe	0xcc87be944080	5	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2444	624	svchost.exe	0xcc87be932080	4	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2488	624	MsMpEng.exe	0xcc87be9460c0	25	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A
+2524	624	svchost.exe	0xcc87be948080	11	-	0	False	2026-10-02 22:48:51.000000 UTC	N/A
+2572	624	wlms.exe	0xcc87be949080	2	-	0	False	2026-10-02 22:48:51.000000 UTC	N/A
+2584	624	svchost.exe	0xcc87be94a080	10	-	0	False	2026-10-02 22:48:51.000000 UTC	N/A
+2688	624	svchost.exe	0xcc87be94b080	2	-	0	False	2026-10-02 22:48:51.000000 UTC	N/A
+2668	2280	AggregatorHost	0xcc87be94e080	2	-	0	False	2026-10-02 22:48:52.000000 UTC	N/A
+3176	1508	MicrosoftEdgeU	0xcc87be94d080	4	-	0	True	2026-10-02 22:48:54.000000 UTC	N/A
+3200	1156	sihost.exe	0xcc87c316e240	9	-	1	False	2026-10-02 22:48:54.000000 UTC	N/A
+3208	624	svchost.exe	0xcc87c316c0c0	3	-	1	False	2026-10-02 22:48:54.000000 UTC	N/A
+3272	624	svchost.exe	0xcc87c3955300	3	-	1	False	2026-10-02 22:48:54.000000 UTC	N/A
+3352	1508	taskhostw.exe	0xcc87c399d0c0	2	-	1	False	2026-10-02 22:48:54.000000 UTC	N/A
+3488	624	svchost.exe	0xcc87c39d1240	2	-	0	False	2026-10-02 22:48:54.000000 UTC	N/A
+3540	624	svchost.exe	0xcc87c39d4300	3	-	0	False	2026-10-02 22:48:55.000000 UTC	N/A
+3580	3540	ctfmon.exe	0xcc87c39ea280	8	-	1	False	2026-10-02 22:48:55.000000 UTC	N/A
+3752	624	svchost.exe	0xcc87c3adc240	2	-	0	False	2026-10-02 22:48:55.000000 UTC	N/A
+3808	560	userinit.exe	0xcc87c3adf340	0	-	1	False	2026-10-02 22:48:56.000000 UTC	2026-10-02 22:49:20.000000 UTC
+3816	624	svchost.exe	0xcc87c3ae0080	3	-	0	False	2026-10-02 22:48:56.000000 UTC	N/A
+3860	3808	explorer.exe	0xcc87c3ae5340	29	-	1	False	2026-10-02 22:48:56.000000 UTC	N/A
+2888	624	NisSrv.exe	0xcc87c3b4e080	5	-	0	False	2026-10-02 22:48:57.000000 UTC	N/A
+3464	744	StartMenuExper	0xcc87be936080	7	-	1	False	2026-10-02 22:48:59.000000 UTC	N/A
+3996	744	TextInputHost.	0xcc87c316a080	10	-	1	False	2026-10-02 22:48:59.000000 UTC	N/A
+4128	744	RuntimeBroker.	0xcc87c399b080	1	-	1	False	2026-10-02 22:49:00.000000 UTC	N/A
+4268	744	SearchApp.exe	0xcc87c3d53080	16	-	1	False	2026-10-02 22:49:00.000000 UTC	N/A
+4392	744	RuntimeBroker.	0xcc87c3d95300	1	-	1	False	2026-10-02 22:49:01.000000 UTC	N/A
+4500	3340	ServerManager.	0xcc87c3e69380	10	-	1	False	2026-10-02 22:49:02.000000 UTC	N/A
+5068	3860	VBoxTray.exe	0xcc87c4058340	12	-	1	False	2026-10-02 22:49:13.000000 UTC	N/A
+3812	624	svchost.exe	0xcc87c3ce6080	22	-	0	False	2026-10-02 22:50:52.000000 UTC	N/A
+4312	624	msdtc.exe	0xcc87be94c080	9	-	0	False	2026-10-02 22:50:52.000000 UTC	N/A
+5036	624	svchost.exe	0xcc87c3d7f080	2	-	0	False	2026-10-02 22:50:53.000000 UTC	N/A
+3956	624	svchost.exe	0xcc87c4196080	9	-	0	False	2026-10-02 22:50:53.000000 UTC	N/A
+2024	624	svchost.exe	0xcc87c41ad300	4	-	1	False	2026-10-02 22:50:54.000000 UTC	N/A
+2516	624	svchost.exe	0xcc87c419c2c0	7	-	0	False	2026-10-02 22:50:55.000000 UTC	N/A
+1832	744	wsmprovhost.ex	0xcc87be8f4080	14	-	0	False	2026-10-02 22:56:41.000000 UTC	N/A
+3468	1832	net.exe	0xcc87be911080	0	-	0	False	2026-10-02 22:56:44.000000 UTC	2026-10-02 22:56:44.000000 UTC
+4244	744	wsmprovhost.ex	0xcc87c2f39080	21	-	0	False	2026-10-02 23:07:29.000000 UTC	N/A
+2164	4244	winpmem.exe	0xcc87be8da080	8	-	0	False	2026-10-02 23:07:31.000000 UTC	N/A
+2852	2164	conhost.exe	0xcc87be93f080	6	-	0	False	2026-10-02 23:07:31.000000 UTC	N/A
+
+===== ev2_pstree.txt =====
+﻿Volatility 3 Framework 2.28.2
+PID	PPID	ImageFileName	Offset(V)	Threads	Handles	SessionId	Wow64	CreateTime	ExitTime	Audit	Cmd	Path
+4	0	System	0xcc87be881080	99	-	N/A	False	2026-10-02 22:48:42.000000 UTC	N/A	-	-	-
+* 100	4	Registry	0xcc87be9ca040	4	-	N/A	False	2026-10-02 22:48:33.000000 UTC	N/A	Registry	-	-
+* 332	4	smss.exe	0xcc87c0398040	2	-	N/A	False	2026-10-02 22:48:42.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\smss.exe	\SystemRoot\System32\smss.exe	\SystemRoot\System32\smss.exe
+428	420	csrss.exe	0xcc87c20b5080	9	-	0	False	2026-10-02 22:48:44.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\csrss.exe	%SystemRoot%\system32\csrss.exe ObjectDirectory=\Windows SharedSection=1024,20480,768 Windows=On SubSystemType=Windows ServerDll=basesrv,1 ServerDll=winsrv:UserServerDllInitialization,3 ServerDll=sxssrv,4 ProfileControl=Off MaxRequestThreads=16	C:\Windows\system32\csrss.exe
+496	488	csrss.exe	0xcc87c21f3080	10	-	1	False	2026-10-02 22:48:45.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\csrss.exe	%SystemRoot%\system32\csrss.exe ObjectDirectory=\Windows SharedSection=1024,20480,768 Windows=On SubSystemType=Windows ServerDll=basesrv,1 ServerDll=winsrv:UserServerDllInitialization,3 ServerDll=sxssrv,4 ProfileControl=Off MaxRequestThreads=16	C:\Windows\system32\csrss.exe
+504	420	wininit.exe	0xcc87c21f1140	1	-	0	False	2026-10-02 22:48:45.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\wininit.exe	wininit.exe	C:\Windows\system32\wininit.exe
+* 624	504	services.exe	0xcc87c2e4d080	6	-	0	False	2026-10-02 22:48:45.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\services.exe	C:\Windows\system32\services.exe	C:\Windows\system32\services.exe
+** 1408	624	svchost.exe	0xcc87c3174080	2	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k netsvcs -p -s Themes	C:\Windows\System32\svchost.exe
+** 2432	624	svchost.exe	0xcc87be944080	5	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k smbsvcs -s LanmanServer	C:\Windows\System32\svchost.exe
+** 2688	624	svchost.exe	0xcc87be94b080	2	-	0	False	2026-10-02 22:48:51.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s WpnService	C:\Windows\system32\svchost.exe
+** 1156	624	svchost.exe	0xcc87be933080	4	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s UserManager	C:\Windows\system32\svchost.exe
+*** 3200	1156	sihost.exe	0xcc87c316e240	9	-	1	False	2026-10-02 22:48:54.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\sihost.exe	sihost.exe	C:\Windows\system32\sihost.exe
+** 392	624	svchost.exe	0xcc87c3032080	2	-	0	False	2026-10-02 22:48:47.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k LocalSystemNetworkRestricted -p -s NcbService	C:\Windows\System32\svchost.exe
+** 1928	624	svchost.exe	0xcc87be93b080	5	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k NetworkService -p -s LanmanWorkstation	C:\Windows\System32\svchost.exe
+** 3208	624	svchost.exe	0xcc87c316c0c0	3	-	1	False	2026-10-02 22:48:54.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k UnistackSvcGroup -s CDPUserSvc	C:\Windows\system32\svchost.exe
+** 2444	624	svchost.exe	0xcc87be932080	4	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k LocalService -s W32Time	C:\Windows\system32\svchost.exe
+** 2572	624	wlms.exe	0xcc87be949080	2	-	0	False	2026-10-02 22:48:51.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\wlms\wlms.exe	C:\Windows\system32\wlms\wlms.exe	C:\Windows\system32\wlms\wlms.exe
+** 1808	624	svchost.exe	0xcc87be92c080	3	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k netsvcs -p -s ShellHWDetection	C:\Windows\System32\svchost.exe
+** 1300	624	svchost.exe	0xcc87c317a080	3	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s gpsvc	C:\Windows\system32\svchost.exe
+** 1940	624	svchost.exe	0xcc87be939080	4	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k LocalService -p -s netprofm	C:\Windows\System32\svchost.exe
+** 2584	624	svchost.exe	0xcc87be94a080	10	-	0	False	2026-10-02 22:48:51.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s Winmgmt	C:\Windows\system32\svchost.exe
+** 924	624	svchost.exe	0xcc87c2f83240	4	-	0	False	2026-10-02 22:48:46.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k DcomLaunch -p -s LSM	C:\Windows\system32\svchost.exe
+** 3488	624	svchost.exe	0xcc87c39d1240	2	-	0	False	2026-10-02 22:48:54.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s TokenBroker	C:\Windows\system32\svchost.exe
+** 1060	624	svchost.exe	0xcc87c30652c0	2	-	0	False	2026-10-02 22:48:47.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k LocalServiceNoNetwork -p	C:\Windows\system32\svchost.exe
+** 424	624	svchost.exe	0xcc87c302d300	3	-	0	False	2026-10-02 22:48:47.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k LocalServiceNetworkRestricted -p -s lmhosts	C:\Windows\System32\svchost.exe
+** 1960	624	svchost.exe	0xcc87be93a080	3	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k LocalServiceNetworkRestricted -p -s WinHttpAutoProxySvc	C:\Windows\system32\svchost.exe
+** 3752	624	svchost.exe	0xcc87c3adc240	2	-	0	False	2026-10-02 22:48:55.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k appmodel -p -s camsvc	C:\Windows\system32\svchost.exe
+** 1708	624	svchost.exe	0xcc87c3171080	5	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k NetworkService -p -s NlaSvc	C:\Windows\System32\svchost.exe
+** 5036	624	svchost.exe	0xcc87c3d7f080	2	-	0	False	2026-10-02 22:50:53.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k LocalSystemNetworkRestricted -p -s StorSvc	C:\Windows\System32\svchost.exe
+** 2224	624	spoolsv.exe	0xcc87be93d080	7	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\spoolsv.exe	C:\Windows\System32\spoolsv.exe	C:\Windows\System32\spoolsv.exe
+** 1076	624	svchost.exe	0xcc87c3070300	7	-	0	False	2026-10-02 22:48:47.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k LocalServiceNetworkRestricted -p -s EventLog	C:\Windows\System32\svchost.exe
+** 1336	624	svchost.exe	0xcc87c3179080	6	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k LocalServiceNetworkRestricted -p -s Dhcp	C:\Windows\system32\svchost.exe
+** 2488	624	MsMpEng.exe	0xcc87be9460c0	25	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A	\Device\HarddiskVolume1\Program Files\Windows Defender\MsMpEng.exe	"C:\Program Files\Windows Defender\MsMpEng.exe"	C:\Program Files\Windows Defender\MsMpEng.exe
+** 1212	624	svchost.exe	0xcc87c3061080	3	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k LocalService -p -s nsi	C:\Windows\system32\svchost.exe
+** 1852	624	svchost.exe	0xcc87be938080	11	-	0	False	2026-10-02 22:48:49.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k LocalServiceNoNetworkFirewall -p	C:\Windows\system32\svchost.exe
+** 3272	624	svchost.exe	0xcc87c3955300	3	-	1	False	2026-10-02 22:48:54.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k UnistackSvcGroup -s WpnUserService	C:\Windows\system32\svchost.exe
+** 2888	624	NisSrv.exe	0xcc87c3b4e080	5	-	0	False	2026-10-02 22:48:57.000000 UTC	N/A	\Device\HarddiskVolume1\Program Files\Windows Defender\NisSrv.exe	"C:\Program Files\Windows Defender\NisSrv.exe"	C:\Program Files\Windows Defender\NisSrv.exe
+** 1356	624	svchost.exe	0xcc87c3178080	1	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k LocalService -p -s DispBrokerDesktopSvc	C:\Windows\system32\svchost.exe
+** 2388	624	svchost.exe	0xcc87be941080	2	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k appmodel -p -s StateRepository	C:\Windows\system32\svchost.exe
+** 3540	624	svchost.exe	0xcc87c39d4300	3	-	0	False	2026-10-02 22:48:55.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k LocalSystemNetworkRestricted -p -s TabletInputService	C:\Windows\System32\svchost.exe
+*** 3580	3540	ctfmon.exe	0xcc87c39ea280	8	-	1	False	2026-10-02 22:48:55.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\ctfmon.exe	"ctfmon.exe"	C:\Windows\system32\ctfmon.exe
+** 2516	624	svchost.exe	0xcc87c419c2c0	7	-	0	False	2026-10-02 22:50:55.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s UsoSvc	C:\Windows\system32\svchost.exe
+** 2264	624	svchost.exe	0xcc87be940080	8	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k NetworkService -p -s CryptSvc	C:\Windows\system32\svchost.exe
+** 4312	624	msdtc.exe	0xcc87be94c080	9	-	0	False	2026-10-02 22:50:52.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\msdtc.exe	C:\Windows\System32\msdtc.exe	C:\Windows\System32\msdtc.exe
+** 1372	624	svchost.exe	0xcc87c3177080	3	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s ProfSvc	C:\Windows\system32\svchost.exe
+** 2524	624	svchost.exe	0xcc87be948080	11	-	0	False	2026-10-02 22:48:51.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\System32\svchost.exe -k NetworkService -p -s WinRM	C:\Windows\System32\svchost.exe
+** 2400	624	svchost.exe	0xcc87be942080	2	-	0	False	2026-10-02 22:48:50.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k LocalSystemNetworkRestricted -p -s SysMain	C:\Windows\system32\svchost.exe
+** 868	624	svchost.exe	0xcc87c2f512c0	9	-	0	False	2026-10-02 22:48:46.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k RPCSS -p	C:\Windows\system32\svchost.exe
+** 1380	624	svchost.exe	0xcc87c3176080	4	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k LocalService -p -s EventSystem	C:\Windows\system32\svchost.exe
+** 1508	624	svchost.exe	0xcc87c3173080	7	-	0	False	2026-10-02 22:48:48.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule	C:\Windows\system32\svchost.exe
+*** 3176	1508	MicrosoftEdgeU	0xcc87be94d080	4	-	0	True	2026-10-02 22:48:54.000000 UTC	N/A	\Device\HarddiskVolume1\Program Files (x86)\Microsoft\EdgeUpdate\MicrosoftEdgeUpdate.exe	"C:\Program Files (x86)\Microsoft\EdgeUpdate\MicrosoftEdgeUpdate.exe" /c	C:\Program Files (x86)\Microsoft\EdgeUpdate\MicrosoftEdgeUpdate.exe
+*** 3352	1508	taskhostw.exe	0xcc87c399d0c0	2	-	1	False	2026-10-02 22:48:54.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\taskhostw.exe	taskhostw.exe {222A245B-E637-4AE9-A93F-A59CA119A75E}	C:\Windows\system32\taskhostw.exe
+** 376	624	svchost.exe	0xcc87c3030300	3	-	0	False	2026-10-02 22:48:47.000000 UTC	N/A	\Device\HarddiskVolume1\Windows\System32\svchost.exe	C:\Windows\system32\svchost.exe -k LocalServiceNetworkRestricted -p -s TimeBrokerSvc	C:\Windows\system32\svchost.exe
+... [truncated for report length] ...

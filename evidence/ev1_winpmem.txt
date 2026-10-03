@@ -1,0 +1,13 @@
+﻿CMD (AFF4, lab-style): .\winpmem.exe -o meridian-app01.aff4 -dd
+Output: C:\Meridian\meridian-app01.aff4
+Size: 4418358501 bytes (snappy AFF4)
+SHA256 (meridian-app01.aff4):
+684ae16175c58a10084617d956b7cf5a70c802665422e497a165e349dcea6555
+
+Also acquired raw image for Volatility 3 (go-winpmem):
+CMD: .\winpmem.exe acquire --progress --verbose --nosparse meridian-app01.raw
+Output: C:\Meridian\meridian-app01.raw
+Size: 6979321856 bytes
+SHA256 (meridian-app01.raw):
+2dff14a8b7fe8f0e8426cb000690e5f06a898829fb8ccabbcc0ca03865ab494c
+Volatility 3 plugins below were run against the raw image.

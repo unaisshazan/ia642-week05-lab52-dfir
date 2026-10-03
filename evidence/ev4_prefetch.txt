@@ -1,0 +1,24 @@
+PECmd against C:\Windows\Prefetch on MERIDIAN-APP01 (Windows Server 2022 Desktop Experience).
+
+Prefetch configuration at collection time:
+  HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters
+    EnablePrefetcher = 3
+    EnableSuperfetch = 3
+  SysMain service = Running (Automatic)
+
+PECmd version 2026.5.0
+Command line: -d <collected Prefetch dir> --csv <out> --csvf prefetch.csv
+Looking for prefetch files in Prefetch directory
+Found 0 Prefetch files
+Processed 0 out of 0 files
+
+CERTUTIL.EXE Prefetch row(s): NONE (directory contained 0 .pf files after repeated interactive and console staging).
+
+Staging corroboration (pf_stage2.log / interactive console task, wall-clock 2026-10-02 20:18:11 -04:00):
+  certutil -hashfile C:\Windows\System32\calc.exe SHA256   (run 6 times)
+  certutil -hashfile C:\Windows\System32\notepad.exe SHA256 (run 1 time)
+  Each completed: "CertUtil: -hashfile command completed successfully."
+  SHA256(calc.exe)=4208893c871d2499f184e3f0f2554da89f451fa9e98d95fc9516c5ae8f2b3bbd
+  SHA256(notepad.exe)=b65079972e88691fe19b5d4d5eb3159f6cd627fb6c4f09ae9b9df959330082df
+
+Interpretation: Server SKU did not materialize application Prefetch traces for these launches despite EnablePrefetcher=3, SysMain running, ACL repair (SYSTEM FullControl), ProcessIdleTasks, and reboot. Prefetch therefore cannot supply run count / last-run / referenced-directories for CERTUTIL.EXE on this host; execution is corroborated by the staging transcript above and by AppCompatCache (see Evidence #5 notes).

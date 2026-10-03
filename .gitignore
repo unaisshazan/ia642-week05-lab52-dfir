@@ -1,0 +1,10 @@
+﻿# Ignore secrets and huge forensic images
+APP01_CREDENTIALS.txt
+*.raw
+*.aff4
+*.hve
+*.hiv
+*.err
+tools/
+vmshare/
+**/Amcache.hve*
